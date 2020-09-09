@@ -96,7 +96,7 @@ public class Menu {
 		System.out.print("Please enter the code: ");
 		String code= sc.nextLine();
 		System.out.print("Please enter the cost of the product: ");
-		String cost = sc.nextLine();
+		double cost = Double.parseDouble(sc.nextLine());
 		System.out.print("Please enter the nit of restaurant to belongs: ");
 		String nit= sc.nextLine();
 		
