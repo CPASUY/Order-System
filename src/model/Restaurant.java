@@ -37,35 +37,10 @@ public class Restaurant {
 	public void setManager(String manager) {
 		this.manager = manager;
 	}
-	public void addRestaurant(String name,String nit,String manager){
-		Restaurant restaurant=new Restaurant(name,nit,manager);
+	public List<Client> getClients(){
+		return clients;
 	}
-	public void addClient(String id_type,String id_number,String name,String phone, String adress){
-		Client temp;
-		Client client=new Client(id_type,id_number,name,phone,adress);
-		String [] parts=name.split(" ");
-		if(clients.isEmpty()){
-			clients.add(client);
-		}
-		else {
-		for (int s= 0; s<clients.size() ;s++){
-			String [] parts2=clients.get(s).getName().split(" ");
-                if (parts[1].compareTo(parts2[1])<0) {
-                    temp=clients.get(s);
-                    clients.add(s,temp);
-                    clients.add(s+1,client);
-                	}
-            	}
-			}	
-		}
-	public void addProduct(String code,String name,String description,double cost,String nit){
-		Product product=new Product(code,name,description,cost,nit);
-	}
-	public String toString() {
-		String message="Product List: \n";
-		for(Product myProducts:products) {
-			message += myProducts.getName() + "-"+ myProducts.getDescription() + "-"+ myProducts.getCost();
-		}
-		return message;
+	public List<Product> getProducts(){
+		return products;
 	}
 }

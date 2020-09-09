@@ -1,14 +1,10 @@
 package ui;
-
+import model.App;
 import java.util.Scanner;
-
-import model.Restaurant;
-
 public class Menu {
-	private Restaurant r;
 	private final static int EXIT_OPTION = 3;
 	private Scanner sc;
-	private Restaurant restaurant;
+	private App app;
 	
 	public Menu() {
 		sc = new Scanner(System.in);
@@ -68,11 +64,13 @@ public class Menu {
 		System.out.print("Please enter the name of the restaurant manager: ");
 		String manager= sc.nextLine();
 		
-		restaurant.addRestaurant(name,nit,manager);
+		app.addRestaurant(name,nit,manager);
 		
 		System.out.println("The restaurant has been added succesfully");
 		}	
 	private void addClient() {
+		System.out.println("Enter the nit of the restaurant who belongs the client");
+		String nit=sc.nextLine();
 		System.out.print("Please enter the full name: ");
 		String name= sc.nextLine();;
 		System.out.print("Please enter the identification type: ");
@@ -84,7 +82,7 @@ public class Menu {
 		System.out.print("Please enter the adress: ");
 		String adress= sc.nextLine();
 		
-		restaurant.addClient(id_type,id_number,name,phone,adress);
+		app.addClient(nit,id_type,id_number,name,phone,adress);
 		
 		System.out.println("The client has been added succesfully");
 	}
@@ -100,14 +98,14 @@ public class Menu {
 		System.out.print("Please enter the nit of restaurant to belongs: ");
 		String nit= sc.nextLine();
 		
-		restaurant.addProduct(code,name,description,cost,nit);
+		app.addProduct(code,name,description,cost,nit);
 		
 		System.out.println("The product has been added succesfully");
 	}
 	private void addOrder() {
 		System.out.print("Please enter the nit of the restaurant who belongs the order : ");
 		String nit = sc.nextLine();
-		System.out.print(r);
+		System.out.print(app);
 		System.out.println("Choose the product you want by writing the number in which the products are ordered");
 		int option=Integer.parseInt(sc.nextLine());
 		System.out.print("Please enter the code of the client: ");
@@ -128,22 +126,22 @@ public class Menu {
 		if(option==1) {
 			System.out.println("Enter the nit of the restaurant");
 			String nit=sc.nextLine();
-			restaurant.updateRestaurant(nit);
+			app.updateRestaurant(nit);
 		}
 		else if(option==2) {
 			System.out.println("Enter the document number of the client");
 			String document=sc.nextLine();
-			restaurant.updateClient(document);
+			app.updateClient(document);
 		}
 		else if(option==3) {
 			System.out.println("Enter the code of the product");
 			String code=sc.nextLine();
-			restaurant.updateProduct(code);
+			app.updateProduct(code);
 		}
 		else {
 			System.out.println("Enter the code of the order");
 			String order_Code=sc.nextLine();
-			restaurant.updateOrder(order_Code);
+			app.updateOrder(order_Code);
 		}
 	}
 }
