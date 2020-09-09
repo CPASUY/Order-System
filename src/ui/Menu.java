@@ -33,9 +33,8 @@ public class Menu {
 		menu += "2. Add client \n";
 		menu += "3. Add product\n";
 		menu += "4. Add order \n";
-		menu += "5. Add Restaurant\n";
-		menu += "6. Add client \n";
-		menu += "7. Exit\n";
+		menu += "5. Data update \n";
+		menu += "6. Exit\n";
 		menu += "Please enter the option: ";
 		return menu;
 	}
@@ -52,7 +51,8 @@ public class Menu {
 			case 2: addClient(); break;
 			case 3: addProduct();   break;
 			case 4: addOrder(); break;
-			case 5: exitProgram(); break;
+			case 5: updateData();break;
+			case 6: exitProgram(); break;
 			default: break;
 		}
 	}
@@ -113,9 +113,37 @@ public class Menu {
 		System.out.print("Please enter the code of the client: ");
 		String code= sc.nextLine();
 
-		
-		restaurant.addOrder();
+
 		
 		System.out.println("The product has been added succesfully");
+	}
+	private void updateData() {
+		String update;
+		System.out.println("What update do you want to do? Choose an option");
+		update  = "1. Restaurant \n";
+		update += "2. Client \n";
+		update += "3. Product \n";
+		update += "4. Order \n";
+		int option=Integer.parseInt(sc.nextLine());
+		if(option==1) {
+			System.out.println("Enter the nit of the restaurant");
+			String nit=sc.nextLine();
+			restaurant.updateRestaurant(nit);
+		}
+		else if(option==2) {
+			System.out.println("Enter the document number of the client");
+			String document=sc.nextLine();
+			restaurant.updateClient(document);
+		}
+		else if(option==3) {
+			System.out.println("Enter the code of the product");
+			String code=sc.nextLine();
+			restaurant.updateProduct(code);
+		}
+		else {
+			System.out.println("Enter the code of the order");
+			String order_Code=sc.nextLine();
+			restaurant.updateOrder(order_Code);
+		}
 	}
 }

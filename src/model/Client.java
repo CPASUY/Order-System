@@ -43,7 +43,7 @@ public class Client {
 		this.id_number = id_number;
 	}
 
-	public String getName() {
+	public String getName(){
 		return this.name;
 	}
 
