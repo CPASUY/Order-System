@@ -27,36 +27,54 @@ public class App {
 		Restaurant restaurant=new Restaurant(name,nit,manager);
 		restaurants.add(restaurant);
 	}
-	public void addClient(String nit,String id_type,String id_number,String name,String phone, String adress){
-		Client temp;
+	public void addClient(String nit,String id_type,String id_number,String name,int phone, String adress){
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
-			for(int w=0;w<restaurants.size();w++){
-			Client client= new Client(id_type,id_number,name,phone,adress);
-			String [] parts=name.split(" ");
-				if(restaurant.getClients().isEmpty()){
-					clients.add(client);
-				}
-				else {
-					for (int s= 0; s<clients.size() ;s++){
-						String [] parts2=clients.get(s).getName().split(" ");
-						if (parts[1].compareTo(parts2[1])<0) {
-							temp=clients.get(s);
-							clients.add(s,temp);
-							clients.add(s+1,client);
-						}
-                	}
-            	}
-			}	
-		}
+			restaurant.addClient(id_type,id_number,name,phone,adress);
+		}	
 	}
 	public void addProduct(String code,String name,String description,double cost,String nit){
-		Product product=new Product(code,name,description,cost,nit);
+		Restaurant restaurant=searchRestaurant(nit);
+		if(restaurant!=null) {
+			restaurant.addProduct(code,name,description,cost,nit);
+		}
+	}
+	public String toStringProducts(String nit) {
+		String message="";
+		Restaurant restaurant=searchRestaurant(nit);
+		if(restaurant!=null) {
+			message=restaurant.toStringProducts();
+		}
+		return message;
+	}
+	public String toStringClients(String nit) {
+		String message="";
+		Restaurant restaurant=searchRestaurant(nit);
+		if(restaurant!=null) {
+			message=restaurant.toStringClients();
+		}
+		return message;
+	}
+	public List<Restaurant> compare(List<Restaurant> restaurants){
+		for (int s=0;s< restaurants.size();s++){
+            for (int m= s+1;m< restaurants.size();m++) {
+                if (restaurants.get(s).getName().compareTo(restaurants.get(m).getName())>0){
+                    Restaurant temp = restaurants.get(s);
+                    Restaurant now=restaurants.get(m);
+                    restaurants.add(s,now);
+                    restaurants.add(m,temp);
+                }
+            }
+        }
+		return restaurants;
 	}
 	public String toString() {
-		String message="Product List: \n";
-		for(Product myProducts:products) {
-			message += myProducts.getName() + "-"+ myProducts.getDescription() + "-"+ myProducts.getCost();
+		List<Restaurant> r2;
+		r2=new ArrayList<Restaurant>();
+		r2=compare(restaurants);
+		String message="Restaurants List: \n";
+		for(Restaurant myRestaurants:r2) {
+			message += myRestaurants.getName();
 		}
 		return message;
 	}

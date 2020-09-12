@@ -78,7 +78,7 @@ public class Menu {
 		System.out.print("Please enter the identification number: ");
 		String id_number= sc.nextLine();
 		System.out.print("Please enter the phone number: ");
-		String phone = sc.nextLine();
+		int phone = Integer.parseInt(sc.nextLine());
 		System.out.print("Please enter the adress: ");
 		String adress= sc.nextLine();
 		

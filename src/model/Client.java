@@ -5,7 +5,7 @@ public class Client {
 	private String id_type;
 	private String id_number;
 	private String name;
-	private String phone;
+	private int phone;
 	private String adress;
 	//Methods
 	/**
@@ -16,8 +16,12 @@ public class Client {
 	 * @param phone
 	 * @param adress
 	 */
-	public Client(String id_type, String id_number, String name, String phone, String adress) {
-		
+	public Client(String id_type, String id_number, String name, int phone, String adress) {
+		this.id_type=id_type;
+		this.id_number=id_number;
+		this.name=name;
+		this.phone=phone;
+		this.adress=adress;
 	}
 	public String getId_type() {
 		return this.id_type;
@@ -55,7 +59,7 @@ public class Client {
 		this.name = name;
 	}
 
-	public String getPhone() {
+	public int getPhone() {
 		return this.phone;
 	}
 
@@ -63,7 +67,7 @@ public class Client {
 	 * 
 	 * @param phone
 	 */
-	public void setPhone(String phone) {
+	public void setPhone(int phone) {
 		this.phone = phone;
 	}
 
