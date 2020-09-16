@@ -179,10 +179,14 @@ public class Menu {
 		}
 	}
 	private void showRestaurants() {
-		
+		app.sortByNameRest();
+		System.out.println(app.getRestaurants());
 	}
 	private void showClients() {
-		
+		System.out.println("Enter the nit of the restaurant");
+		String nit=sc.nextLine();
+		app.sortByClient(nit);
+		System.out.println(app.toStringClients(nit));	
 	}
 	private void orderStatus() {
 		

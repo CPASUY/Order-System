@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -71,6 +72,13 @@ public class App {
 		Order order=new Order(code,date,code_client,nit,products);
 		orders.add(order);
 	}
+	public String toStringRestaurants() {
+		String message="Restaurants List: \n";
+		for(Restaurant myR:restaurants) {
+			message += myR.getName() + "-"+ myR.getNit() + "-"+ myR.getManager()+ "\n";
+		}
+		return message;
+	}
 	public String toStringProducts(String nit) {
 		String message="";
 		Restaurant restaurant=searchRestaurant(nit);
@@ -87,31 +95,6 @@ public class App {
 		}
 		return message;
 	}
-	public List<Restaurant> compare(List<Restaurant> restaurants){
-		for (int s=0;s< restaurants.size();s++){
-            for (int m= s+1;m< restaurants.size();m++) {
-                if (restaurants.get(s).getName().compareTo(restaurants.get(m).getName())>0){
-                    Restaurant temp = restaurants.get(s);
-                    Restaurant now=restaurants.get(m);
-                    restaurants.add(s,now);
-                    restaurants.add(m,temp);
-                }
-            }
-        }
-		return restaurants;
-	}
-	public String toString() {
-		List<Restaurant> r2;
-		int count=1;
-		r2=new ArrayList<Restaurant>();
-		r2=compare(restaurants);
-		String message="Restaurants List: \n";
-		for(Restaurant myRestaurants:r2) {
-			message += count+". "+ myRestaurants.getName()+ "\n";
-			count++;
-		}
-		return message;
-	}
 	public void updateRestaurant(String nit) {
 		
 	}
@@ -123,6 +106,15 @@ public class App {
 	}
 	public void updateOrder(String code) {
 		
+	}
+	public void sortByNameRest() {
+		Collections.sort((List<Restaurant>) restaurants);
+	}
+	public void sortByClient(String nit) {
+		Restaurant restaurant=searchRestaurant(nit);
+		if(restaurant!=null) {
+			restaurant.sortByClient();
+		}
 	}
 	public void importDataRestaurant(String name) throws IOException {
 		File f=new File(name);

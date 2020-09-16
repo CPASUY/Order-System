@@ -5,9 +5,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Restaurant {
+public class Restaurant implements Comparable<Restaurant> {
 	//Atributes
 	private String name;
 	private String nit;
@@ -119,5 +120,13 @@ public class Restaurant {
 			line=br.readLine();
 		}
 		br.close();
+	}
+	@Override
+	public int compareTo(Restaurant r) {
+		return name.compareToIgnoreCase(r.getName());
+	}
+	public void sortByClient() {
+			NameComparator nc = new NameComparator();
+			Collections.sort(clients,nc);
 	}
 }
