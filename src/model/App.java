@@ -1,14 +1,42 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class App {
 	//Relations
-	private List<Restaurant> restaurants;
+	private ArrayList<Restaurant> restaurants;
+	private ArrayList<Order> orders;
 	//Methods
 	public App() {
 		this.restaurants=new ArrayList<Restaurant>();
+		this.orders=new ArrayList<Order>();
+	}
+	public ArrayList<Restaurant> getRestaurants(){
+		return restaurants;
+	}
+	public ArrayList<Order> getOrders(){
+		return orders;
+	}
+	public ArrayList<Product> chooseProducts(int[]order,String nit){
+		ArrayList<Product> products;
+		ArrayList<Product> p;
+		products=new ArrayList<Product>();
+		p=new ArrayList<Product>();
+		Restaurant restaurant=searchRestaurant(nit);
+		if(restaurant!=null) {
+			p=restaurant.getProducts();
+			for(int s=0;s<order.length;s++) {
+				int num=order[s];
+				products.add(p.get(num-1))	;
+			}
+		}
+		return products;
 	}
 	public Restaurant searchRestaurant(String nit) {
 		Restaurant search=null;
@@ -38,6 +66,10 @@ public class App {
 		if(restaurant!=null) {
 			restaurant.addProduct(code,name,description,cost,nit);
 		}
+	}
+	public void addOrder(String code, Date date, String code_client, String nit,ArrayList<Product> products) {
+		Order order=new Order(code,date,code_client,nit,products);
+		orders.add(order);
 	}
 	public String toStringProducts(String nit) {
 		String message="";
@@ -70,11 +102,13 @@ public class App {
 	}
 	public String toString() {
 		List<Restaurant> r2;
+		int count=1;
 		r2=new ArrayList<Restaurant>();
 		r2=compare(restaurants);
 		String message="Restaurants List: \n";
 		for(Restaurant myRestaurants:r2) {
-			message += myRestaurants.getName();
+			message += count+". "+ myRestaurants.getName()+ "\n";
+			count++;
 		}
 		return message;
 	}
@@ -89,5 +123,40 @@ public class App {
 	}
 	public void updateOrder(String code) {
 		
+	}
+	public void importDataRestaurant(String name) throws IOException {
+		File f=new File(name);
+		BufferedReader br =new BufferedReader(new FileReader(f));
+		String line=br.readLine();
+		while(line!=null) {
+			String [] parts=line.split("|");
+			addRestaurant(parts[0],parts[1],parts[2]);
+			line=br.readLine();
+		}
+		br.close();
+	}
+	public void importDataClient(String name,String nit) throws IOException {
+		File f=new File(name);
+		Restaurant restaurant=searchRestaurant(nit);
+		if(restaurant!=null) {
+			restaurant.importDataClient(f);
+		}
+	}
+	public void importDataProduct(String name,String nit) throws IOException {
+		File f=new File(name);
+		Restaurant restaurant=searchRestaurant(nit);
+		if(restaurant!=null) {
+			restaurant.importDataProduct(f);
+		}
+	}
+	public void importDataOrder(String name) throws IOException {
+		File f=new File(name);
+		BufferedReader br =new BufferedReader(new FileReader(f));
+		String line=br.readLine();
+		while(line!=null) {
+			String [] parts=line.split("|");
+			line=br.readLine();
+		}
+		br.close();
 	}
 }

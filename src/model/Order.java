@@ -19,8 +19,12 @@ public class Order {
 	 * @param code_client
 	 * @param nit
 	 */
-	public Order(String code, Date date, String code_client, String nit) {
-		
+	public Order(String code, Date date, String code_client, String nit,ArrayList<Product> orderList) {
+		this.code=code;
+		this.date=date;
+		this.code_client=code_client;
+		this.nit=nit;
+		this.orderList=orderList;
 	}
 
 	public String getCode() {

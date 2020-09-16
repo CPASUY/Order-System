@@ -1,5 +1,9 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +13,9 @@ public class Restaurant {
 	private String nit;
 	private String manager;
 	//Relations
-	private List<Product> products;
-	private List<Client> clients;
+	private ArrayList<Product> products;
+	private ArrayList<Client> clients;
+	//Methods
 	//Methods
 	public Restaurant(String name,String nit,String manager) {
 		this.name=name;
@@ -37,10 +42,10 @@ public class Restaurant {
 	public void setManager(String manager) {
 		this.manager = manager;
 	}
-	public List<Client> getClients(){
+	public ArrayList<Client> getClients(){
 		return clients;
 	}
-	public List<Product> getProducts(){
+	public ArrayList<Product> getProducts(){
 		return products;
 	}
 	public void addClient(String id_type,String id_number,String name,int phone, String adress) {
@@ -72,7 +77,7 @@ public class Restaurant {
 		}
 		return message;
 	}
-	public List<Client> bubble(List<Client> clients){
+	public ArrayList<Client> bubble(ArrayList<Client> clients){
 		for(int s=0; s<clients.size(); s++){
 		    for(int m=0; m<clients.size()-1; m++){
 		        if(clients.get(m).getPhone()>clients.get(m+2).getPhone()){
@@ -86,7 +91,7 @@ public class Restaurant {
 		return clients;
 	  }
 	public String toStringClients() {
-		List<Client> clients2;
+		ArrayList<Client> clients2;
 		clients2=new ArrayList<Client>();
 		clients2=bubble(clients);
 		String message="Clients List: \n";
@@ -94,5 +99,25 @@ public class Restaurant {
 			message += myClients.getName() + "-"+ myClients.getId_type() + "-"+ myClients.getId_number()+ "-"+ myClients.getPhone();
 		}
 		return message;
+	}
+	public void importDataClient(File file) throws IOException {
+		BufferedReader br =new BufferedReader(new FileReader(file));
+		String line=br.readLine();
+		while(line!=null) {
+			String [] parts=line.split("|");
+			addClient(parts[0],parts[1],parts[2],Integer.parseInt(parts[3]),parts[4]);
+			line=br.readLine();
+		}
+		br.close();
+	}
+	public void importDataProduct(File file) throws IOException {
+		BufferedReader br =new BufferedReader(new FileReader(file));
+		String line=br.readLine();
+		while(line!=null) {
+			String [] parts=line.split("|");
+			addProduct(parts[0],parts[1],parts[2],Double.parseDouble(parts[3]),parts[4]);
+			line=br.readLine();
+		}
+		br.close();
 	}
 }
