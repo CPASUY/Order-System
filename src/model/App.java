@@ -52,6 +52,19 @@ public class App {
 		}
 		return search;
 	}
+	public Order searchOrder(String code) {
+		Order search=null;
+		boolean find=false;
+		for (int s=0;s<orders.size() && find==false;s++){
+			if(orders.get(s)!=null){
+				if (orders.get(s).getCode().equals(code)){
+				search=orders.get(s);
+				find=true;
+				}
+			}
+		}
+		return search;
+	}
 	public void addRestaurant(String name,String nit,String manager){
 		Restaurant restaurant=new Restaurant(name,nit,manager);
 		restaurants.add(restaurant);
@@ -115,11 +128,22 @@ public class App {
 			restaurant.updateClient(document,newId_number,newId_type,newName,newPhone,newAdress);
 		}
 	}
-	public void updateProduct(String code) {
-		
+	public void updateProducts(String code,String newCode,String nit,String newNit,String newName,String newDescription,double newCost) {
+		Restaurant restaurant=searchRestaurant(nit);
+		if(restaurant!=null) {
+			restaurant.updateProducts(code,newCode,newNit,newName,newDescription,newCost);
+		}
 	}
-	public void updateOrder(String code) {
-		
+	public void updateOrder(String order_Code,String newCode,String newNit) {
+		Order or=searchOrder(order_Code);
+		if(or!=null) {
+			if(newCode!=null) {
+				or.setCode_client(newCode);
+			}
+			if(newNit!=null) {
+				or.setNit(newNit);
+			}
+		}
 	}
 	public void sortByNameRest() {
 		Collections.sort((List<Restaurant>) restaurants);

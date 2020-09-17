@@ -61,6 +61,19 @@ public class Restaurant implements Comparable<Restaurant> {
 		}
 		return search;
 	}
+	public Product searchProduct(String code) {
+		Product search=null;
+		boolean find=false;
+		for (int s=0;s<clients.size() && find==false;s++){
+			if(products.get(s)!=null){
+				if (products.get(s).getCode().equals(code)){
+				search=products.get(s);
+				find=true;
+				}
+			}
+		}
+		return search;
+	}
 	public void addClient(String id_type,String id_number,String name,int phone, String adress) {
 		Client client= new Client(id_type,id_number,name,phone,adress);
 		String [] parts=name.split(" ");
@@ -120,6 +133,26 @@ public class Restaurant implements Comparable<Restaurant> {
 			}
 			if(newAdress!=null) {
 				c.setAdress(newAdress);
+			}
+		}
+	}
+	public void updateProducts(String code,String newCode,String newNit,String newName,String newDescription,double newCost) {
+		Product p=searchProduct(code);
+		if(p!=null) {
+			if(newNit!=null) {
+				p.setNit(newNit);
+			}
+			if(newCode!=null) {
+				p.setCode(newCode);
+			}
+			if(newName!=null) {
+				p.setName(newName);
+			}
+			if(newDescription!=null) {
+				p.setDescription(newDescription);
+			}
+			if(newCost!=0.0) {
+				p.setCost(newCost);
 			}
 		}
 	}

@@ -155,7 +155,10 @@ public class Menu {
 		String newNit=null;
 		String newManager=null;
 		String newName=null;
+		String newDescription=null;
+		Double newCost=0.0;
 		int newPhone=0;
+		String newCode=null;
 		System.out.println("What update do you want to do? Choose an option");
 		System.out.println("1. Restaurant \n");
 		System.out.println("2. Client \n");
@@ -226,14 +229,59 @@ public class Menu {
 			app.updateClient(nit,document,newId_number,newId_type,newName,newPhone,newAdress);
 		}
 		else if(option==3) {
+			System.out.println("Information to update");
+			System.out.println("Enter the nit of the restaurant who belongs the product");
+			String nit=sc.nextLine();
+			System.out.println("Do you want to update the nit of the restaurant who belongs? Enter 1 for yes 2 for no");
+			int op7=Integer.parseInt(sc.nextLine());
+			if(op7==1) {
+				System.out.println("Enter the new nit");
+				newNit=sc.nextLine();
+			}
 			System.out.println("Enter the code of the product");
 			String code=sc.nextLine();
-			app.updateProduct(code);
+			System.out.println("Do you want to update code of the product? Enter 1 for yes 2 for no");
+			int op4=Integer.parseInt(sc.nextLine());
+			if(op4==1) {
+				System.out.println("Enter the new code");
+				newCode=sc.nextLine();
+			}
+			System.out.println("Do you want to update the name of the product? Enter 1 for yes 2 for no");
+			int op5=Integer.parseInt(sc.nextLine());
+			if(op5==1) {
+				System.out.println("Enter the new name");
+				newName=sc.nextLine();
+			}
+			System.out.println("Do you want to update the description of the product? Enter 1 for yes 2 for no");
+			int op6=Integer.parseInt(sc.nextLine());
+			if(op6==1) {
+				System.out.println("Enter the new description");
+				newDescription=sc.nextLine();
+			}
+			System.out.println("Do you want to update the cost of the product? Enter 1 for yes 2 for no");
+			int op3=Integer.parseInt(sc.nextLine());
+			if(op3==1) {
+				System.out.println("Enter the new cost");
+				newCost=Double.parseDouble(sc.nextLine());
+			}
+			app.updateProducts(code,newCode,nit,newNit,newName,newDescription,newCost);
 		}
 		else {
 			System.out.println("Enter the code of the order");
 			String order_Code=sc.nextLine();
-			app.updateOrder(order_Code);
+			System.out.println("Do you want to update the client code of the order? Enter 1 for yes 2 for no");
+			int op3=Integer.parseInt(sc.nextLine());
+			if(op3==1) {
+				System.out.println("Enter the new code");
+				newCode=sc.nextLine();
+			}
+			System.out.println("Do you want to update the nit of the restaurant who belongs the order? Enter 1 for yes 2 for no");
+			int op4=Integer.parseInt(sc.nextLine());
+			if(op4==1) {
+				System.out.println("Enter the new nit");
+				newNit=sc.nextLine();
+			}
+			app.updateOrder(order_Code,newCode,newNit);
 		}
 	}
 	private void showRestaurants() {
