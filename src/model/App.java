@@ -101,16 +101,19 @@ public class App {
 			if(newNit!=null) {
 				restaurant.setNit(newNit);
 			}
-		}
-		if(newName!=null) {
-			restaurant.setName(newName);
-		}
-		if(newManager!=null) {
-			restaurant.setManager(newManager);
+			if(newName!=null) {
+				restaurant.setName(newName);
+			}
+			if(newManager!=null) {
+				restaurant.setManager(newManager);
+			}
 		}
 	}
 	public void updateClient(String nit,String document,String newId_number,String newId_type,String newName,int newPhone,String newAdress) {
-		
+		Restaurant restaurant=searchRestaurant(nit);
+		if(restaurant!=null) {
+			restaurant.updateClient(document,newId_number,newId_type,newName,newPhone,newAdress);
+		}
 	}
 	public void updateProduct(String code) {
 		

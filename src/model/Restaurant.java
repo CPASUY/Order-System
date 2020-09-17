@@ -49,6 +49,19 @@ public class Restaurant implements Comparable<Restaurant> {
 	public ArrayList<Product> getProducts(){
 		return products;
 	}
+	public Client searchClient(String id_number) {
+		Client search=null;
+		boolean find=false;
+		for (int s=0;s<clients.size() && find==false;s++){
+			if(clients.get(s)!=null){
+				if (clients.get(s).getId_number().equals(id_number)){
+				search=clients.get(s);
+				find=true;
+				}
+			}
+		}
+		return search;
+	}
 	public void addClient(String id_type,String id_number,String name,int phone, String adress) {
 		Client client= new Client(id_type,id_number,name,phone,adress);
 		String [] parts=name.split(" ");
@@ -91,6 +104,26 @@ public class Restaurant implements Comparable<Restaurant> {
 		}
 		return clients;
 	  }
+	public void updateClient(String document,String newId_number,String newId_type,String newName,int newPhone,String newAdress) {
+		Client c=searchClient(document);
+		if(c!=null) {
+			if(newId_number!=null) {
+				c.setId_number(newId_number);
+			}
+			if(newId_type!=null) {
+				c.setId_type(newId_type);
+			}
+			if(newName!=null) {
+				c.setName(newName);
+			}
+			if(newPhone!=0) {
+				c.setPhone(newPhone);
+			}
+			if(newAdress!=null) {
+				c.setAdress(newAdress);
+			}
+		}
+	}
 	public String toStringClients() {
 		ArrayList<Client> clients2;
 		clients2=new ArrayList<Client>();

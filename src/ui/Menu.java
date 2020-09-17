@@ -149,7 +149,12 @@ public class Menu {
 		System.out.println("The product has been added succesfully");
 	}
 	private void updateData() {
-		String newNit,newName,newManager,newId_number,newId_type,newAdress=null;
+		String newId_number=null;
+		String newId_type=null;
+		String newAdress=null;
+		String newNit=null;
+		String newManager=null;
+		String newName=null;
 		int newPhone=0;
 		System.out.println("What update do you want to do? Choose an option");
 		System.out.println("1. Restaurant \n");

@@ -79,7 +79,7 @@ public class Client implements Comparable<Client>{
 	 * 
 	 * @param dress
 	 */
-	public void setDress(String adress) {
+	public void setAdress(String adress) {
 		this.adress = adress;
 	}
 	@Override
