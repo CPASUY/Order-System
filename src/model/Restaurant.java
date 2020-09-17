@@ -125,8 +125,13 @@ public class Restaurant implements Comparable<Restaurant> {
 	public int compareTo(Restaurant r) {
 		return name.compareToIgnoreCase(r.getName());
 	}
-	public void sortByClient() {
+	public void sortByNameClient() {
 			NameComparator nc = new NameComparator();
 			Collections.sort(clients,nc);
+			
+	}
+	public void sortByPhone() {
+		PhoneComparator nc = new PhoneComparator();
+		Collections.sort(clients,nc);
 	}
 }

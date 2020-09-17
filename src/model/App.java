@@ -95,8 +95,19 @@ public class App {
 		}
 		return message;
 	}
-	public void updateRestaurant(String nit) {
-		
+	public void updateRestaurant(String nit,String newNit,String newName,String newManager) {
+		Restaurant restaurant=searchRestaurant(nit);
+		if(restaurant!=null) {
+			if(newNit!=null) {
+				restaurant.setNit(newNit);
+			}
+		}
+		if(newName!=null) {
+			restaurant.setName(newName);
+		}
+		if(newManager!=null) {
+			restaurant.setManager(newManager);
+		}
 	}
 	public void updateClient(String document) {
 		
@@ -113,7 +124,7 @@ public class App {
 	public void sortByClient(String nit) {
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
-			restaurant.sortByClient();
+			restaurant.sortByNameClient();
 		}
 	}
 	public void importDataRestaurant(String name) throws IOException {

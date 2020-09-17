@@ -1,6 +1,6 @@
 package model;
 
-public class Product {
+public class Product implements Comparable<Product> {
 	//Atributes
 	private String code;
 	private String name;
@@ -79,6 +79,12 @@ public class Product {
 	public void setNit(String nit) {
 		this.nit = nit;
 	}
+	@Override
+	public int compareTo(Product p) {
+		return code.compareToIgnoreCase(p.getCode());
+
+	}
+		
 
 
 

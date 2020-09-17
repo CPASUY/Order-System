@@ -149,23 +149,76 @@ public class Menu {
 		System.out.println("The product has been added succesfully");
 	}
 	private void updateData() {
-		String update;
+		String newNit,newName,newManager,newId_number,newId_type,newAdress=null;
+		int newPhone=0;
 		System.out.println("What update do you want to do? Choose an option");
-		update  = "1. Restaurant \n";
-		update += "2. Client \n";
-		
-		update += "3. Product \n";
-		update += "4. Order \n";
+		System.out.println("1. Restaurant \n");
+		System.out.println("2. Client \n");
+		System.out.println("3. Product \n");;
+		System.out.println("4. Order \n");;
 		int option=Integer.parseInt(sc.nextLine());
 		if(option==1) {
+			System.out.println("Information to update");
 			System.out.println("Enter the nit of the restaurant");
 			String nit=sc.nextLine();
-			app.updateRestaurant(nit);
+			System.out.println("Do you want to update the nit of the restaurant? Enter 1 for yes 2 for no");
+			int op=Integer.parseInt(sc.nextLine());
+			if(op==1) {
+				System.out.println("Enter the new nit of the restaurant");
+				newNit=sc.nextLine();
+			}
+			System.out.println("Do you want to update the name of the restaurant? Enter 1 for yes 2 for no");
+			int op1=Integer.parseInt(sc.nextLine());
+			if(op1==1) {
+				System.out.println("Enter the new name of the restaurant");
+				newName=sc.nextLine();
+			}
+			System.out.println("Do you want to update the manager of the restaurant? Enter 1 for yes 2 for no");
+			int op2=Integer.parseInt(sc.nextLine());
+			if(op2==1) {
+				System.out.println("Enter the new manager of the restaurant");
+				newManager=sc.nextLine();
+			}
+			app.updateRestaurant(nit,newNit,newName,newManager);
+			System.out.println("Restaurant update");
 		}
 		else if(option==2) {
-			System.out.println("Enter the document number of the client");
+			System.out.println("Information to update");
+			System.out.println("Enter the nit of the restaurant who belongs the client");
+			String nit=sc.nextLine();
+			System.out.println("Enter the id number of the client");
 			String document=sc.nextLine();
-			app.updateClient(document);
+			System.out.println("Do you want to update the id number of the client? Enter 1 for yes 2 for no");
+			int op2=Integer.parseInt(sc.nextLine());
+			if(op2==1) {
+				System.out.println("Enter the new id number");
+				newId_number=sc.nextLine();
+			}
+			System.out.println("Do you want to update the id type of the client? Enter 1 for yes 2 for no");
+			int op4=Integer.parseInt(sc.nextLine());
+			if(op4==1) {
+				System.out.println("Enter the new id type");
+				newId_type=sc.nextLine();
+			}
+			System.out.println("Do you want to update the name of the client? Enter 1 for yes 2 for no");
+			int op5=Integer.parseInt(sc.nextLine());
+			if(op5==1) {
+				System.out.println("Enter the new name");
+				newName=sc.nextLine();
+			}
+			System.out.println("Do you want to update the phone of the client? Enter 1 for yes 2 for no");
+			int op6=Integer.parseInt(sc.nextLine());
+			if(op6==1) {
+				System.out.println("Enter the new phone");
+				newPhone=Integer.parseInt(sc.nextLine());
+			}
+			System.out.println("Do you want to update the adress of the client? Enter 1 for yes 2 for no");
+			int op7=Integer.parseInt(sc.nextLine());
+			if(op7==1) {
+				System.out.println("Enter the new adress");
+				newAdress=sc.nextLine();
+			}
+			app.updateClient(nit,document,newId_number,newId_type,newName,newPhone,newAdress);
 		}
 		else if(option==3) {
 			System.out.println("Enter the code of the product");

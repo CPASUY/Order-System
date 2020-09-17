@@ -1,6 +1,6 @@
 package model;
 
-public class Client {
+public class Client implements Comparable<Client>{
 	//Atributes
 	private String id_type;
 	private String id_number;
@@ -82,6 +82,18 @@ public class Client {
 	public void setDress(String adress) {
 		this.adress = adress;
 	}
-
-
+	@Override
+	public int compareTo(Client other) {
+		int comp;
+		int doc1=Integer.parseInt(id_number);
+		int doc2=Integer.parseInt(other.getId_number());
+		if(doc1<doc2) {
+			comp = 1; 
+		}else if(doc1>doc2) {
+			comp = -1;
+		}else {
+			comp=0;
+		}
+		return comp;
+	}
 }
