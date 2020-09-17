@@ -109,7 +109,7 @@ public class App {
 			restaurant.setManager(newManager);
 		}
 	}
-	public void updateClient(String document) {
+	public void updateClient(String nit,String document,String newId_number,String newId_type,String newName,int newPhone,String newAdress) {
 		
 	}
 	public void updateProduct(String code) {
