@@ -83,14 +83,9 @@ public class Restaurant implements Comparable<Restaurant> {
 			}
 			else {
 				for (int s= 0; s<clients.size() ;s++){
-					String [] parts2=clients.get(s).getName().split(" ");
-					if (parts[1].compareTo(parts2[1])<0) {
-						temp=clients.get(s);
-						clients.add(s,temp);
-						clients.add(s+1,client);
+					
 					}
             	}
-        	}
 	}
 	public void addProduct(String code,String name,String description,double cost,String nit) {
 		Product product=new Product(code,name,description,cost,nit);

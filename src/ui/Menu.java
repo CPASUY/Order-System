@@ -167,10 +167,10 @@ public class Menu {
 		int newPhone=0;
 		String newCode=null;
 		System.out.println("What update do you want to do? Choose an option");
-		System.out.println("1. Restaurant \n");
-		System.out.println("2. Client \n");
-		System.out.println("3. Product \n");;
-		System.out.println("4. Order \n");;
+		System.out.print("1. Restaurant \n");
+		System.out.print("2. Client \n");
+		System.out.print("3. Product \n");;
+		System.out.print("4. Order \n");;
 		int option=Integer.parseInt(sc.nextLine());
 		if(option==1) {
 			System.out.println("Information to update");
