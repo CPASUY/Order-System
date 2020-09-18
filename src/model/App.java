@@ -125,7 +125,7 @@ public class App {
 	public void updateClient(String nit,String document,String newId_number,String newId_type,String newName,int newPhone,String newAdress) {
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
-			restaurant.updateClient(document,newId_number,newId_type,newName,newPhone,newAdress);
+			restaurant.updateClients(document,newId_number,newId_type,newName,newPhone,newAdress);
 		}
 	}
 	public void updateProducts(String code,String newCode,String nit,String newNit,String newName,String newDescription,double newCost) {
@@ -142,6 +142,38 @@ public class App {
 			}
 			if(newNit!=null) {
 				or.setNit(newNit);
+			}
+		}
+	}
+	public void removeRestaurant(String nit) {
+		Restaurant restaurant=searchRestaurant(nit);
+		if(restaurant!=null) {
+			for(int s=0;s<restaurants.size();s++) {
+				if(restaurants.get(s).getNit().equals(nit)) {
+					restaurants.remove(s);
+				}
+			}
+		}
+	}
+	public void removeClient(String nit,String eliminateCode) {
+		Restaurant restaurant=searchRestaurant(nit);
+		if(restaurant!=null) {
+			restaurant.removeClient(eliminateCode);
+		}
+	}
+	public void removeProduct(String nit,String eliminateCode) {
+		Restaurant restaurant=searchRestaurant(nit);
+		if(restaurant!=null) {
+			restaurant.removeProduct(eliminateCode);
+		}
+	}
+	public void removeOrder(String eliminateCode) {
+		Order or=searchOrder(eliminateCode);
+		if(or!=null) {
+			for(int s=0;s<orders.size();s++) {
+				if(orders.get(s).getNit().equals(eliminateCode)) {
+					orders.remove(s);
+				}
 			}
 		}
 	}

@@ -35,8 +35,14 @@ public class Menu {
 		menu += "2. Add client \n";
 		menu += "3. Add product\n";
 		menu += "4. Add order \n";
-		menu += "5. Data update \n";
-		menu += "6. Exit\n";
+		menu += "5. Show restaurants \n";
+		menu += "6. Show clients\n";
+		menu += "7. Order status\n";
+		menu += "8. Search client \n";
+		menu += "9. Data update \n";
+		menu += "10. Remove information\n";
+		menu += "11. Import data \n";
+		menu += "12. Exit\n";
 		menu += "Please enter the option: ";
 		return menu;
 	}
@@ -53,13 +59,14 @@ public class Menu {
 			case 2: addClient(); break;
 			case 3: addProduct();   break;
 			case 4: addOrder(); break;
-			case 5: updateData();break;
-			case 6: showRestaurants();break;
-			case 7: showClients();break;
-			case 8: orderStatus(); break;
-			case 9: searchClient();break;
-			case 10: importData();break;
-			case 11: exitProgram(); break;
+			case 5: showRestaurants();break;
+			case 6: showClients();break;
+			case 7: orderStatus(); break;
+			case 8: searchClient();break;
+			case 9: updateData();break;
+			case 10: remove();break;
+			case 11: importData();break;
+			case 12: exitProgram(); break;
 			default: break;
 		}
 	}
@@ -283,6 +290,42 @@ public class Menu {
 			}
 			app.updateOrder(order_Code,newCode,newNit);
 		}
+	}
+	private void remove() {
+		String eliminateCode=null;
+		String nit=null;
+		String update="";
+		System.out.println("What kind of information do you want to remove? Choose an option");
+		update  = "1. Restaurant \n";
+		update += "2. Client \n";
+		update += "3. Product \n";
+		update += "4. Order \n";
+		int option=Integer.parseInt(sc.nextLine());
+		if(option==1) {
+			System.out.println("Enter the nit of the restaurant ");
+			nit=sc.nextLine();
+			app.removeRestaurant(nit);
+		}
+		if(option==2) {
+			System.out.println("Enter the nit of the restaurant who belongs the client");
+			nit=sc.nextLine();
+			System.out.println("Enter the id number of the client");
+			eliminateCode=sc.nextLine();
+			app.removeClient(nit,eliminateCode);
+		}
+		if(option==3) {
+			System.out.println("Enter the nit of the restaurant who belongs the product");
+			nit=sc.nextLine();
+			System.out.println("Enter the code of the product");
+			eliminateCode=sc.nextLine();
+			app.removeProduct(nit,eliminateCode);
+		}
+		else {
+			System.out.println("Enter the code of the order");
+			eliminateCode=sc.nextLine();
+			app.removeOrder(eliminateCode);
+		}
+
 	}
 	private void showRestaurants() {
 		app.sortByNameRest();

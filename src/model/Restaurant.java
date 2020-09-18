@@ -116,7 +116,7 @@ public class Restaurant implements Comparable<Restaurant> {
 		}
 		return clients;
 	  }
-	public void updateClient(String document,String newId_number,String newId_type,String newName,int newPhone,String newAdress) {
+	public void updateClients(String document,String newId_number,String newId_type,String newName,int newPhone,String newAdress) {
 		Client c=searchClient(document);
 		if(c!=null) {
 			if(newId_number!=null) {
@@ -153,6 +153,26 @@ public class Restaurant implements Comparable<Restaurant> {
 			}
 			if(newCost!=0.0) {
 				p.setCost(newCost);
+			}
+		}
+	}
+	public void removeClient(String eliminateCode) {
+		Client c=searchClient(eliminateCode);
+		if(c!=null) {
+			for(int s=0;s<clients.size();s++) {
+				if(clients.get(s).getId_number().equals(eliminateCode)) {
+					clients.remove(s);
+				}
+			}
+		}
+	}
+	public void removeProduct(String eliminateCode) {
+		Product p=searchProduct(eliminateCode);
+		if(p!=null) {
+			for(int s=0;s<products.size();s++) {
+				if(products.get(s).getCode().equals(eliminateCode)) {
+					products.remove(s);
+				}
 			}
 		}
 	}
