@@ -1,11 +1,15 @@
 package model;
 
-public class Client implements Comparable<Client>{
+import java.io.Serializable;
+
+public class Client implements Comparable<Client>,Serializable{
+	//Constants
+	private static final long serialVersionUID = 1L;
 	//Atributes
 	private String id_type;
 	private String id_number;
 	private String name;
-	private int phone;
+	private String phone;
 	private String adress;
 	//Methods
 	/**
@@ -16,7 +20,7 @@ public class Client implements Comparable<Client>{
 	 * @param phone
 	 * @param adress
 	 */
-	public Client(String id_type, String id_number, String name, int phone, String adress) {
+	public Client(String id_type, String id_number, String name, String phone, String adress) {
 		this.id_type=id_type;
 		this.id_number=id_number;
 		this.name=name;
@@ -59,7 +63,7 @@ public class Client implements Comparable<Client>{
 		this.name = name;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return this.phone;
 	}
 
@@ -67,11 +71,11 @@ public class Client implements Comparable<Client>{
 	 * 
 	 * @param phone
 	 */
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
-	public String getDress() {
+	public String getAdress() {
 		return this.adress;
 	}
 

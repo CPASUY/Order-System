@@ -2,12 +2,21 @@ package model;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Restaurant implements Comparable<Restaurant> {
+public class Restaurant implements Comparable<Restaurant>,Serializable {
+	//Constants
+	private static final long serialVersionUID = 1L;
+	public static final String CLIENTS_FILE_NAME="data/clients.bbd";
+	public static final String PRODUCTS_FILE_NAME="data/products.bbd";
 	//Atributes
 	private String name;
 	private String nit;
@@ -17,12 +26,24 @@ public class Restaurant implements Comparable<Restaurant> {
 	private ArrayList<Client> clients;
 	//Methods
 	//Methods
-	public Restaurant(String name,String nit,String manager) {
+	public Restaurant(String name,String nit,String manager) throws IOException {
 		this.name=name;
 		this.nit=nit;
 		this.manager=manager;
 		this.products=new ArrayList<Product>();
 		this.clients=new ArrayList<Client>();
+		try {
+			loadClients();
+			loadProducts();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		saveClients();
+		saveProducts();
 	}
 	public String getName() {
 		return this.name;
@@ -74,7 +95,7 @@ public class Restaurant implements Comparable<Restaurant> {
 		}
 		return search;
 	}
-	public void addClient(String id_type,String id_number,String name,int phone, String adress) {
+	public void addClient(String id_type,String id_number,String name,String phone, String adress) {
 		Client client= new Client(id_type,id_number,name,phone,adress);
 		String [] parts=name.split(" ");
 		Client temp;
@@ -200,6 +221,36 @@ public class Restaurant implements Comparable<Restaurant> {
 			line=br.readLine();
 		}
 		br.close();
+	}
+	private void saveClients() throws IOException {
+		ObjectOutputStream oos= new ObjectOutputStream(new FileOutputStream(CLIENTS_FILE_NAME));
+		oos.writeObject(clients);
+		oos.close();
+	}
+	private void loadClients() throws IOException, ClassNotFoundException{
+		File f=new File(CLIENTS_FILE_NAME);
+		boolean load=false;
+		if(f.exists()) {
+			load=true;
+			ObjectInputStream ois= new ObjectInputStream(new FileInputStream(f));
+			clients=(ArrayList<Client>) ois.readObject();
+			ois.close();
+		}
+	}
+	private void saveProducts() throws IOException {
+		ObjectOutputStream oos= new ObjectOutputStream(new FileOutputStream(PRODUCTS_FILE_NAME));
+		oos.writeObject(products);
+		oos.close();
+	}
+	private void loadProducts() throws IOException, ClassNotFoundException{
+		File f=new File(PRODUCTS_FILE_NAME);
+		boolean load=false;
+		if(f.exists()) {
+			load=true;
+			ObjectInputStream ois= new ObjectInputStream(new FileInputStream(f));
+			products=(ArrayList<Product>) ois.readObject();
+			ois.close();
+		}
 	}
 	@Override
 	public int compareTo(Restaurant r) {

@@ -1,8 +1,12 @@
 package model;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -10,13 +14,25 @@ import java.util.List;
 
 
 public class App {
+	//Constants
+	public static final String RESTAURANTS_FILE_NAME="data/restaurants.bbd";
 	//Relations
 	private ArrayList<Restaurant> restaurants;
 	private ArrayList<Order> orders;
 	//Methods
-	public App() {
+	public App() throws IOException {
 		this.restaurants=new ArrayList<Restaurant>();
 		this.orders=new ArrayList<Order>();
+		try {
+			loadRestaurants();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		saveRestaurants();
 	}
 	public ArrayList<Restaurant> getRestaurants(){
 		return restaurants;
@@ -65,11 +81,11 @@ public class App {
 		}
 		return search;
 	}
-	public void addRestaurant(String name,String nit,String manager){
+	public void addRestaurant(String name,String nit,String manager) throws IOException{
 		Restaurant restaurant=new Restaurant(name,nit,manager);
 		restaurants.add(restaurant);
 	}
-	public void addClient(String nit,String id_type,String id_number,String name,int phone, String adress){
+	public void addClient(String nit,String id_type,String id_number,String name,String phone, String adress){
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
 			restaurant.addClient(id_type,id_number,name,phone,adress);
@@ -99,6 +115,21 @@ public class App {
 			message=restaurant.toStringProducts();
 		}
 		return message;
+	}
+	private void saveRestaurants() throws IOException {
+		ObjectOutputStream oos= new ObjectOutputStream(new FileOutputStream(RESTAURANTS_FILE_NAME));
+		oos.writeObject(restaurants);
+		oos.close();
+	}
+	private void loadRestaurants() throws IOException, ClassNotFoundException{
+		File f=new File(RESTAURANTS_FILE_NAME);
+		boolean load=false;
+		if(f.exists()) {
+			load=true;
+			ObjectInputStream ois= new ObjectInputStream(new FileInputStream(f));
+			restaurants=(ArrayList<Restaurant>) ois.readObject();
+			ois.close();
+		}
 	}
 	public String toStringClients(String nit) {
 		String message="";

@@ -1,6 +1,10 @@
 package model;
 
-public class Product implements Comparable<Product> {
+import java.io.Serializable;
+
+public class Product implements Comparable<Product>,Serializable {
+	//Constants
+	private static final long serialVersionUID = 1L;
 	//Atributes
 	private String code;
 	private String name;
@@ -17,7 +21,12 @@ public class Product implements Comparable<Product> {
 	 * @param nit
 	 */
 	public Product(String code, String name, String description, double cost, String nit) {
-
+		this.code=code;
+		this.name=name;
+		this.description=description;
+		this.cost=cost;
+		this.nit=nit;
+		
 
 	}
 	public String getCode() {

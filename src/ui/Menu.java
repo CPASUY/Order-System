@@ -16,7 +16,7 @@ public class Menu {
 		sc = new Scanner(System.in);
 	}
 	
-	public void startMenu() {
+	public void startMenu() throws IOException {
 		String menu = getMenuText();
 		int option;
 		do {
@@ -53,7 +53,7 @@ public class Menu {
 		return op;
 	}
 	
-	private void executeOperation(int option) {
+	private void executeOperation(int option) throws IOException {
 		switch(option) {
 			case 1: addRestaurant();   break;
 			case 2: addClient(); break;
@@ -74,7 +74,7 @@ public class Menu {
 	private void exitProgram() {
 		sc.close();
 	}
-	private void addRestaurant() {
+	private void addRestaurant() throws IOException {
 		System.out.print("Please enter the restaurant name: ");
 		String name= sc.nextLine();;
 		System.out.print("Please enter the nit: ");
@@ -96,7 +96,7 @@ public class Menu {
 		System.out.print("Please enter the identification number: ");
 		String id_number= sc.nextLine();
 		System.out.print("Please enter the phone number: ");
-		int phone = Integer.parseInt(sc.nextLine());
+		String phone =sc.nextLine();
 		System.out.print("Please enter the adress: ");
 		String adress= sc.nextLine();
 		
