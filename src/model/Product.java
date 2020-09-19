@@ -1,5 +1,6 @@
 package model;
-
+import exceptions.CeroCostException;
+import exceptions.NegativeCostException;
 import java.io.Serializable;
 
 public class Product implements Comparable<Product>,Serializable {
@@ -20,14 +21,18 @@ public class Product implements Comparable<Product>,Serializable {
 	 * @param cost
 	 * @param nit
 	 */
-	public Product(String code, String name, String description, double cost, String nit) {
+	public Product(String code, String name, String description, double cost, String nit) throws NegativeCostException,CeroCostException  {
 		this.code=code;
 		this.name=name;
 		this.description=description;
 		this.cost=cost;
-		this.nit=nit;
-		
-
+		if(cost<0) {
+			throw new NegativeCostException();
+		}
+		else if(cost==0) {
+			throw new CeroCostException();
+		}
+		this.nit=nit;	
 	}
 	public String getCode() {
 		return this.code;
@@ -72,8 +77,15 @@ public class Product implements Comparable<Product>,Serializable {
 	/**
 	 * 
 	 * @param cost
+	 * @throws CeroCostException 
 	 */
-	public void setCost(double cost) {
+	public void setCost(double cost) throws NegativeCostException, CeroCostException {
+		if(cost<0) {
+			throw new NegativeCostException();
+		}
+		else if(cost==0) {
+			throw new CeroCostException();
+		}
 		this.cost = cost;
 	}
 

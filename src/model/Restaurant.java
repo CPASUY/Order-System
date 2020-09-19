@@ -12,6 +12,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import exceptions.CeroCostException;
+import exceptions.NegativeCostException;
+
 public class Restaurant implements Comparable<Restaurant>,Serializable {
 	//Constants
 	private static final long serialVersionUID = 1L;
@@ -99,7 +102,7 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		Client client= new Client(id_type,id_number,name,phone,adress);
 		clients.add(client);
 	}
-	public void addProduct(String code,String name,String description,double cost,String nit) {
+	public void addProduct(String code,String name,String description,double cost,String nit) throws NegativeCostException, CeroCostException {
 		Product product=new Product(code,name,description,cost,nit);
 		products.add(product);
 	}

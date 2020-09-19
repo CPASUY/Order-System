@@ -12,6 +12,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import exceptions.CeroCostException;
+import exceptions.NegativeCostException;
+
 
 public class App {
 	//Constants
@@ -91,7 +94,7 @@ public class App {
 			restaurant.addClient(id_type,id_number,name,phone,adress);
 		}	
 	}
-	public void addProduct(String code,String name,String description,double cost,String nit){
+	public void addProduct(String code,String name,String description,double cost,String nit) throws NegativeCostException, CeroCostException{
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
 			restaurant.addProduct(code,name,description,cost,nit);
