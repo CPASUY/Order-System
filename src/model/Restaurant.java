@@ -97,16 +97,7 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 	}
 	public void addClient(String id_type,String id_number,String name,String phone, String adress) {
 		Client client= new Client(id_type,id_number,name,phone,adress);
-		String [] parts=name.split(" ");
-		Client temp;
-			if(clients.isEmpty()){
-				clients.add(client);
-			}
-			else {
-				for (int s= 0; s<clients.size() ;s++){
-					
-					}
-            	}
+		clients.add(client);
 	}
 	public void addProduct(String code,String name,String description,double cost,String nit) {
 		Product product=new Product(code,name,description,cost,nit);
