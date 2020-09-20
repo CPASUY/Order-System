@@ -1,12 +1,15 @@
 package ui;
 import model.App;
 import model.Product;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+
+import exceptions.CeroCostException;
+import exceptions.NegativeCostException;
 public class Menu {
 	private final static int EXIT_OPTION = 3;
 	private Scanner sc;
@@ -16,7 +19,7 @@ public class Menu {
 		sc = new Scanner(System.in);
 	}
 	
-	public void startMenu() throws IOException {
+	public void startMenu() throws IOException, NegativeCostException, CeroCostException {
 		String menu = getMenuText();
 		int option;
 		do {
@@ -52,8 +55,8 @@ public class Menu {
 		op = Integer.parseInt(sc.nextLine());
 		return op;
 	}
-	
-	private void executeOperation(int option) throws IOException {
+	private void executeOperation(int option) throws IOException, NegativeCostException, CeroCostException {
+		createApp();
 		switch(option) {
 			case 1: addRestaurant();   break;
 			case 2: addClient(); break;
@@ -73,6 +76,9 @@ public class Menu {
 	
 	private void exitProgram() {
 		sc.close();
+	}
+	public void createApp() throws IOException{
+		app=new App();
 	}
 	private void addRestaurant() throws IOException {
 		System.out.print("Please enter the restaurant name: ");
@@ -104,7 +110,7 @@ public class Menu {
 		
 		System.out.println("The client has been added succesfully");
 	}
-	private void addProduct() {
+	private void addProduct() throws NegativeCostException, CeroCostException {
 		System.out.print("Please enter the product name: ");
 		String name= sc.nextLine();;
 		System.out.print("Please enter the description of the product: ");
