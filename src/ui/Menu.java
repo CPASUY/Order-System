@@ -80,7 +80,7 @@ public class Menu {
 	public void createApp() throws IOException{
 		app=new App();
 	}
-	private void addRestaurant() throws IOException {
+	private void addRestaurant() {
 		System.out.print("Please enter the restaurant name: ");
 		String name= sc.nextLine();;
 		System.out.print("Please enter the nit: ");
@@ -88,7 +88,11 @@ public class Menu {
 		System.out.print("Please enter the name of the restaurant manager: ");
 		String manager= sc.nextLine();
 		
-		app.addRestaurant(name,nit,manager);
+		try {
+			app.addRestaurant(name,nit,manager);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		System.out.println("The restaurant has been added succesfully");
 		}	
@@ -170,7 +174,7 @@ public class Menu {
 		String newName=null;
 		String newDescription=null;
 		Double newCost=0.0;
-		int newPhone=0;
+		String newPhone=null;
 		String newCode=null;
 		System.out.println("What update do you want to do? Choose an option");
 		System.out.print("1. Restaurant \n");
@@ -231,7 +235,7 @@ public class Menu {
 			int op6=Integer.parseInt(sc.nextLine());
 			if(op6==1) {
 				System.out.println("Enter the new phone");
-				newPhone=Integer.parseInt(sc.nextLine());
+				newPhone=sc.nextLine();
 			}
 			System.out.println("Do you want to update the adress of the client? Enter 1 for yes 2 for no");
 			int op7=Integer.parseInt(sc.nextLine());
@@ -277,7 +281,13 @@ public class Menu {
 				System.out.println("Enter the new cost");
 				newCost=Double.parseDouble(sc.nextLine());
 			}
-			app.updateProducts(code,newCode,nit,newNit,newName,newDescription,newCost);
+			try {
+				app.updateProducts(code,newCode,nit,newNit,newName,newDescription,newCost);
+			} catch (NegativeCostException e) {
+				System.out.println(e.getMessage());
+			} catch (CeroCostException e) {
+				System.out.println(e.getMessage());
+			}
 		}
 		else {
 			System.out.println("Enter the code of the order");
@@ -340,14 +350,28 @@ public class Menu {
 	private void showClients() {
 		System.out.println("Enter the nit of the restaurant");
 		String nit=sc.nextLine();
-		app.sortByClient(nit);
+		app.toStringClients(nit);
 		System.out.println(app.toStringClients(nit));	
 	}
 	private void orderStatus() {
 		
 	}
 	private void searchClient() {
-		
+		System.out.println("Enter the nit of the restaurant who belongs the client you want to search");
+		String nit=sc.nextLine();
+		System.out.println("Enter the name of the client you want to search");
+		String name=sc.nextLine();
+		long start = System.currentTimeMillis();
+		boolean found=app.searchClientName(nit,name);
+		long end = System.currentTimeMillis();
+		if(found==false) {
+			System.out.println("The client does not exist");
+			System.out.println("Search time: "+ end);
+		}
+		else {
+			System.out.println("Client founded");
+			System.out.println("Search time: "+ end);
+		}
 	}
 	private void importData() {
 		String update="";
@@ -387,8 +411,16 @@ public class Menu {
 			System.out.println("Type the file name to import:");
 			String name=sc.nextLine();
 			try {
-				app.importDataProduct(name,nit);
-				System.out.println("The file has been imported successfully");
+				try {
+					app.importDataProduct(name,nit);
+					System.out.println("The file has been imported successfully");
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (NegativeCostException e) {
+					System.out.println(e.getMessage());
+				} catch (CeroCostException e) {
+					System.out.println(e.getMessage());
+				}
 			}
 			catch(IOException e) {
 				System.out.println("The data can not be imported");

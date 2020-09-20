@@ -12,6 +12,7 @@ public class Order implements Serializable {
 	private Date date;
 	private String code_client;
 	private String nit;
+	private String status;
 	//Relations
 	private ArrayList<Product> orderList;
 	//Methods
@@ -28,6 +29,7 @@ public class Order implements Serializable {
 		this.code_client=code_client;
 		this.nit=nit;
 		this.orderList=orderList;
+		this.status="Requested";
 	}
 
 	public String getCode() {
@@ -89,5 +91,15 @@ public class Order implements Serializable {
 	public void setOrderList(ArrayList<Product>orderList) {
 		this.orderList = orderList;
 	}
+	public String getStatus() {
+		return this.status;
+	}
 
+	/**
+	 * 
+	 * @param nit
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

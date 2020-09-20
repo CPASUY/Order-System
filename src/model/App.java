@@ -156,13 +156,13 @@ public class App {
 			}
 		}
 	}
-	public void updateClient(String nit,String document,String newId_number,String newId_type,String newName,int newPhone,String newAdress) {
+	public void updateClient(String nit,String document,String newId_number,String newId_type,String newName,String newPhone,String newAdress) {
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
 			restaurant.updateClients(document,newId_number,newId_type,newName,newPhone,newAdress);
 		}
 	}
-	public void updateProducts(String code,String newCode,String nit,String newNit,String newName,String newDescription,double newCost) {
+	public void updateProducts(String code,String newCode,String nit,String newNit,String newName,String newDescription,double newCost) throws NegativeCostException, CeroCostException {
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
 			restaurant.updateProducts(code,newCode,newNit,newName,newDescription,newCost);
@@ -214,11 +214,13 @@ public class App {
 	public void sortByNameRest() {
 		Collections.sort((List<Restaurant>) restaurants);
 	}
-	public void sortByClient(String nit) {
+	public boolean searchClientName(String nit, String name) {
 		Restaurant restaurant=searchRestaurant(nit);
+		boolean search=false;
 		if(restaurant!=null) {
-			restaurant.sortByNameClient();
+			search=restaurant.searchClientName(name);
 		}
+		return search;
 	}
 	public void importDataRestaurant(String name) throws IOException {
 		File f=new File(name);
@@ -238,7 +240,7 @@ public class App {
 			restaurant.importDataClient(f);
 		}
 	}
-	public void importDataProduct(String name,String nit) throws IOException {
+	public void importDataProduct(String name,String nit) throws IOException, NumberFormatException, NegativeCostException, CeroCostException {
 		File f=new File(name);
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {

@@ -99,7 +99,41 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		return search;
 	}
 	public void addClient(String id_type,String id_number,String name,String phone, String adress) {
+		int comp;
 		Client client= new Client(id_type,id_number,name,phone,adress);
+		String full1=" ";
+		String full2=" "; 
+		String parts[]=client.getName().split(" ");
+		if(parts.length==2) {
+			full1+=parts[2];
+			full1+=parts[1];
+			full1+=parts[0];
+		}
+		else {
+			full1+=parts[1];
+			full1+=parts[0];
+		}
+		for (int s= 0; s< clients.size(); s++) {
+            for (int m=s+1; m<clients.size();m++) {
+            	String nom2 = clients.get(m).getName(); 
+        		String parts2[]=nom2.split(" ");
+        		if(parts2.length==2) {
+        			full2+=parts[2];
+        			full2+=parts[1];
+        			full2+=parts[0];
+        		}
+        		else {
+        			full2+=parts[1];
+        			full2+=parts[0];
+        		}
+                if (full1.compareTo(full2)<0) 
+                {
+                    Client temp = client;
+                    clients.add(s,clients.get(m));
+                    clients.add(m,client);
+                }
+            }
+        }
 		clients.add(client);
 	}
 	public void addProduct(String code,String name,String description,double cost,String nit) throws NegativeCostException, CeroCostException {
@@ -116,7 +150,9 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 	public ArrayList<Client> bubble(ArrayList<Client> clients){
 		for(int s=0; s<clients.size(); s++){
 		    for(int m=0; m<clients.size()-1; m++){
-		        if(clients.get(m).getPhone()>clients.get(m+2).getPhone()){
+		    	int phone1=Integer.parseInt(clients.get(m).getPhone());
+		    	int phone2=Integer.parseInt(clients.get(m+2).getPhone());
+		        if(phone1>phone2){
 		        	Client temp=clients.get(m+1);
 		        	Client now=clients.get(m);
 		        	clients.add(m+1,now);
@@ -126,7 +162,7 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		}
 		return clients;
 	  }
-	public void updateClients(String document,String newId_number,String newId_type,String newName,int newPhone,String newAdress) {
+	public void updateClients(String document,String newId_number,String newId_type,String newName,String newPhone,String newAdress) {
 		Client c=searchClient(document);
 		if(c!=null) {
 			if(newId_number!=null) {
@@ -138,7 +174,7 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 			if(newName!=null) {
 				c.setName(newName);
 			}
-			if(newPhone!=0) {
+			if(newPhone!=null) {
 				c.setPhone(newPhone);
 			}
 			if(newAdress!=null) {
@@ -146,7 +182,7 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 			}
 		}
 	}
-	public void updateProducts(String code,String newCode,String newNit,String newName,String newDescription,double newCost) {
+	public void updateProducts(String code,String newCode,String newNit,String newName,String newDescription,double newCost) throws NegativeCostException, CeroCostException {
 		Product p=searchProduct(code);
 		if(p!=null) {
 			if(newNit!=null) {
@@ -165,6 +201,16 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 				p.setCost(newCost);
 			}
 		}
+	}
+	public boolean searchClientName(String name) {
+		boolean search=false;
+		for(int s=0;s<clients.size();s++) {
+			String []parts=clients.get(s).getName().split(" ");
+			if(parts[0].equals(name)) {
+				search=true;
+			}
+		}
+		return search;
 	}
 	public void removeClient(String eliminateCode) {
 		Client c=searchClient(eliminateCode);
@@ -201,12 +247,12 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		String line=br.readLine();
 		while(line!=null) {
 			String [] parts=line.split("|");
-			addClient(parts[0],parts[1],parts[2],Integer.parseInt(parts[3]),parts[4]);
+			addClient(parts[0],parts[1],parts[2],parts[3],parts[4]);
 			line=br.readLine();
 		}
 		br.close();
 	}
-	public void importDataProduct(File file) throws IOException {
+	public void importDataProduct(File file) throws IOException, NumberFormatException, NegativeCostException, CeroCostException {
 		BufferedReader br =new BufferedReader(new FileReader(file));
 		String line=br.readLine();
 		while(line!=null) {
@@ -250,13 +296,5 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 	public int compareTo(Restaurant r) {
 		return name.compareToIgnoreCase(r.getName());
 	}
-	public void sortByNameClient() {
-			NameComparator nc = new NameComparator();
-			Collections.sort(clients,nc);
-			
-	}
-	public void sortByPhone() {
-		PhoneComparator nc = new PhoneComparator();
-		Collections.sort(clients,nc);
-	}
+
 }
