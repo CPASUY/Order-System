@@ -7,6 +7,9 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
+import exceptions.CeroCostException;
+import exceptions.NegativeCostException;
+
 class OrderTest {
 	private Order o;
 	private String code;
@@ -21,7 +24,7 @@ class OrderTest {
 	private String nitP;
 	private ArrayList<Product> products;
 	
-	public void setupStage1(){
+	public void setupStage1() throws NegativeCostException, CeroCostException{
 		codeP="A49F";
 		name="Coca-cola";
 		description="Soda";
@@ -30,7 +33,7 @@ class OrderTest {
 		p=new Product(codeP,name,description,cost,nitP);
 		products=new ArrayList<Product>();
 	}
-	public void setupStage2(){
+	public void setupStage2() throws NegativeCostException, CeroCostException{
 		codeP="4349F";
 		name="Chocorramo";
 		description="Cake";
@@ -47,7 +50,7 @@ class OrderTest {
 		o=new Order(code,date,code_client,nit,products);
 	}
 	@Test
-	void testOrder() {
+	void testOrder() throws NegativeCostException, CeroCostException {
 		setupStage1();
 		products.add(p);
 		code="A49F";
@@ -64,7 +67,7 @@ class OrderTest {
 		assertEquals(products,o.getOrderList(),"The order products is wrong");
 	}
 	@Test
-	void testSetCode_client() {
+	void testSetCode_client() throws NegativeCostException, CeroCostException {
 		setupStage2();
 		
 		String newCode_c="1.543.757.757";

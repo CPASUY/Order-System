@@ -56,7 +56,7 @@ class ProductTest {
 		} catch (NegativeCostException e) {
 			assertEquals(value,p.getCost());
 		} catch (CeroCostException e) {
-			fail("NegativeCostExceptione expected");
+			fail("NegativeCostExceptione expected,not CeroCostException");
 			
 		}
 		
