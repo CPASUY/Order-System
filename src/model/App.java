@@ -56,6 +56,12 @@ public class App {
 		}
 		return products;
 	}
+	/** searchRestaurant
+     *Method used to search for a restaurant
+     * post:Restaurant object created
+     * @param nit -restaurant nit-!= null
+     * @return Restaurant search null or not if find it.
+     */
 	public Restaurant searchRestaurant(String nit) {
 		Restaurant search=null;
 		boolean find=false;
@@ -69,6 +75,12 @@ public class App {
 		}
 		return search;
 	}
+	/** searchOder
+     *Method used to search for a order
+     * post:Oder object created
+     * @param code-order codet-!= null
+     * @return Order search null or not if find it.
+     */
 	public Order searchOrder(String code) {
 		Order search=null;
 		boolean find=false;
@@ -82,6 +94,11 @@ public class App {
 		}
 		return search;
 	}
+	/** addRestaurant
+     * Method used to add restaurant
+     * @param name-nit-manager-!= null
+     * @return boolean add
+     */
 	public boolean addRestaurant(String name,String nit,String manager) throws IOException{
 		boolean add=false;
 		Restaurant r=searchRestaurant(nit);
@@ -92,6 +109,11 @@ public class App {
 		}
 		return add;
 	}
+	/** addClient
+     * Method used to add client
+     * @param nit-id_type-id_number-name-phone-adress-!= null
+     * @return boolean add
+     */
 	public boolean addClient(String nit,String id_type,String id_number,String name,String phone, String adress){
 		boolean add=false;
 		Restaurant restaurant=searchRestaurant(nit);
@@ -105,16 +127,30 @@ public class App {
 		orders.clear();
 		restaurants.clear();
 	}
+	/** addProduct
+     * Method used to add product
+     * @param code-name-description-cost-nit!= null
+     * @return void
+     */
 	public void addProduct(String code,String name,String description,double cost,String nit) throws NegativeCostException, CeroCostException{
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
 			restaurant.addProduct(code,name,description,cost,nit);
 		}
 	}
+	/** addOrder
+     * Method used to add order
+     * @param code-date-code_client-nit-products!= null
+     * @return void
+     */
 	public void addOrder(String code, Date date, String code_client, String nit,ArrayList<Product> products) {
 		Order order=new Order(code,date,code_client,nit,products);
 		orders.add(order);
 	}
+	/** toStringRestaurants
+     * Method to provide the restaurants information 
+     * @return String restaurants information
+     */
 	public String toStringRestaurants() {
 		String message="Restaurants List: \n";
 			for(int s=0;s<restaurants.size();s++) {
@@ -122,6 +158,10 @@ public class App {
 			}
 		return message;
 	}
+	/** toStringProducts
+     * Method to verify if the restaurants who belongs the product exist
+     * @return String products information
+     */
 	public String toStringProducts(String nit) {
 		String message="";
 		Restaurant restaurant=searchRestaurant(nit);
@@ -130,11 +170,19 @@ public class App {
 		}
 		return message;
 	}
+	/**saveRestaurants
+     * Method to save data restaurants information 
+     * @return void
+     */
 	private void saveRestaurants() throws IOException {
 		ObjectOutputStream oos= new ObjectOutputStream(new FileOutputStream(RESTAURANTS_FILE_NAME));
 		oos.writeObject(restaurants);
 		oos.close();
 	}
+	/**loadRestaurants
+     * Method to load data restaurants information
+     * @return void
+     */
 	private void loadRestaurants() throws IOException, ClassNotFoundException{
 		File f=new File(RESTAURANTS_FILE_NAME);
 		boolean load=false;
@@ -145,6 +193,11 @@ public class App {
 			ois.close();
 		}
 	}
+	/** toStringClients
+     * Method to verify if the restaurants who belongs the clients exist
+     * @param nit-!= null
+     * @return String clients information
+     */
 	public String toStringClients(String nit) {
 		String message="";
 		Restaurant restaurant=searchRestaurant(nit);
@@ -153,6 +206,11 @@ public class App {
 		}
 		return message;
 	}
+	/** statusOrder
+     * Method to change the status of the orders
+     * @param status-code-!= null
+     * @return void
+     */
 	public void statusOrder(String status,String code) {
 		Order or=searchOrder(code);
 		if(or!=null) {
@@ -167,6 +225,11 @@ public class App {
 			}
 		}
 	}
+	/** updateRestaurant
+     * Method to update the restaurants information 
+     * @param nit-newNit-newName-newManager-!= null
+     * @return void
+     */
 	public void updateRestaurant(String nit,String newNit,String newName,String newManager) {
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
@@ -181,18 +244,33 @@ public class App {
 			}
 		}
 	}
+	/** updateClient
+     * Method to update the clients information 
+     * @param nit-document-newId_number-newId_type-newName-newPhone-newAdress!=null
+     * @return void
+     */
 	public void updateClient(String nit,String document,String newId_number,String newId_type,String newName,String newPhone,String newAdress) {
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
 			restaurant.updateClients(document,newId_number,newId_type,newName,newPhone,newAdress);
 		}
 	}
+	/** updateProducts
+     * Method to update the produdcts information 
+     * @param code-newCode-nit-newNit-newName-newDescription-newCost!=null
+     * @return void
+     */
 	public void updateProducts(String code,String newCode,String nit,String newNit,String newName,String newDescription,double newCost) throws NegativeCostException, CeroCostException {
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
 			restaurant.updateProducts(code,newCode,newNit,newName,newDescription,newCost);
 		}
 	}
+	/** updateOder
+     * Method to update the orders information 
+     * @param order_Code-newCode-newNit!=null
+     * @return void
+     */
 	public void updateOrder(String order_Code,String newCode,String newNit) {
 		Order or=searchOrder(order_Code);
 		if(or!=null) {
@@ -204,6 +282,11 @@ public class App {
 			}
 		}
 	}
+	/** removeRestaurant
+     * Method to remove a restaurant of the list of restaurants
+     * @param nit-!= null
+     * @return void
+     */
 	public void removeRestaurant(String nit) {
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
@@ -214,18 +297,33 @@ public class App {
 			}
 		}
 	}
+	/** removeClient
+     * Method to remove a client of the list of clients of the restaurant
+     * @param eliminatedCode-nit!= null
+     * @return void
+     */
 	public void removeClient(String nit,String eliminateCode) {
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
 			restaurant.removeClient(eliminateCode);
 		}
 	}
+	/** removeProducts
+     * Method to remove a product of the list of products of the restaurant
+     * @param eliminatedCode-nit!= null
+     * @return void
+     */
 	public void removeProduct(String nit,String eliminateCode) {
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
 			restaurant.removeProduct(eliminateCode);
 		}
 	}
+	/** removeOrder
+     * Method to remove a order of the list of orders of the restaurant
+     * @param eliminatedCode!= null
+     * @return void
+     */
 	public void removeOrder(String eliminateCode) {
 		Order or=searchOrder(eliminateCode);
 		if(or!=null) {
@@ -236,9 +334,17 @@ public class App {
 			}
 		}
 	}
+	/** searchClientName
+     *Method used to sort the restaurants for the name
+     */
 	public void sortByNameRest() {
 		Collections.sort((List<Restaurant>) restaurants);
 	}
+	/** searchClientName
+     *Method used to search a client for the name
+     * @param nit-name!= null
+     * @return bolean search true if find it,false if not
+     */
 	public boolean searchClientName(String nit, String name) {
 		Restaurant restaurant=searchRestaurant(nit);
 		boolean search=false;
@@ -247,6 +353,11 @@ public class App {
 		}
 		return search;
 	}
+	/**importDataRestaurant
+     * Method to import data restauranst information 
+     * @param name!= null
+     * @return void
+     */
 	public void importDataRestaurant(String name) throws IOException {
 		File f=new File(name);
 		BufferedReader br =new BufferedReader(new FileReader(f));
@@ -258,6 +369,11 @@ public class App {
 		}
 		br.close();
 	}
+	/**importDataClient
+     * Method to import data clients information of the restaurant
+     * @param name-nit!= null
+     * @return void
+     */
 	public void importDataClient(String name,String nit) throws IOException {
 		File f=new File(name);
 		Restaurant restaurant=searchRestaurant(nit);
@@ -265,6 +381,11 @@ public class App {
 			restaurant.importDataClient(f);
 		}
 	}
+	/**importDataProduct
+     * Method to import data products information of the restaurant
+     * @param name-nit!= null
+     * @return void
+     */
 	public void importDataProduct(String name,String nit) throws IOException, NumberFormatException, NegativeCostException, CeroCostException {
 		File f=new File(name);
 		Restaurant restaurant=searchRestaurant(nit);
@@ -272,6 +393,11 @@ public class App {
 			restaurant.importDataProduct(f);
 		}
 	}
+	/**importDataOrder
+     * Method to import data order information 
+     * @param name!= null
+     * @return void
+     */
 	public void importDataOrder(String name) throws IOException {
 		File f=new File(name);
 		BufferedReader br =new BufferedReader(new FileReader(f));

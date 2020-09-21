@@ -82,9 +82,15 @@ public class Menu {
 		sc.close();
 		
 	}
+	 /** createApp
+     *Method used create a new app
+     */
 	public void createApp() throws IOException{
 		app=new App();
 	}
+	/** addRestaurant
+     * Method used to enter the information of a restaurant and register it
+     */
 	private void addRestaurant() {
 		boolean add=false;
 		System.out.print("Please enter the restaurant name: ");
@@ -106,6 +112,9 @@ public class Menu {
 		System.out.println("The restaurant has  notbeen added succesfully");	
 		}
 	}	
+	/** addClient
+     * Method used to enter the information of a client and register it
+     */
 	private void addClient() {
 		System.out.println("Enter the nit of the restaurant who belongs the client");
 		String nit=sc.nextLine();
@@ -128,6 +137,9 @@ public class Menu {
 			System.out.println("The client has not been added succesfully");
 		}
 	}
+	/** addProduct
+     * Method used to enter the information of a product and register it
+     */
 	private void addProduct() throws NegativeCostException, CeroCostException {
 		System.out.print("Please enter the product name: ");
 		String name= sc.nextLine();;
@@ -144,6 +156,9 @@ public class Menu {
 		
 		System.out.println("The product has been added succesfully");
 	}
+	/** addOrder
+     * Method used to enter the information of a order and register it
+     */
 	private void addOrder() {
 		String msg="";
 		ArrayList<Product> products;
@@ -179,6 +194,9 @@ public class Menu {
 		
 		System.out.println("The product has been added succesfully");
 	}
+	/** updateData
+     * Method used to enter the information of a restaurant,client,product or order and update it
+     */
 	private void updateData() {
 		String newId_number=null;
 		String newId_type=null;
@@ -321,6 +339,9 @@ public class Menu {
 			app.updateOrder(order_Code,newCode,newNit);
 		}
 	}
+	/** remove
+     * Method used to remove the information of a restaurant,product,client or order
+     */
 	private void remove() {
 		String eliminateCode=null;
 		String nit=null;
@@ -357,6 +378,9 @@ public class Menu {
 		}
 
 	}
+	/** showRestaurants
+     * Method used to show all the restaurants of the app 
+     */
 	private void showRestaurants() {
 		String msg="";
 		app.sortByNameRest();
@@ -364,12 +388,18 @@ public class Menu {
 		System.out.println(msg);
 		
 	}
+	/** showClients
+     * Method used to show all the clients of a restaurant
+     */
 	private void showClients() {
 		System.out.println("Enter the nit of the restaurant");
 		String nit=sc.nextLine();
 		app.toStringClients(nit);
 		System.out.println(app.toStringClients(nit));	
 	}
+	/** orderStatus
+     * Method used to change the status of a order
+     */
 	private void orderStatus() {
 		Status status = null;
 		String order=" ";
@@ -414,6 +444,9 @@ public class Menu {
 		app.statusOrder(code,order);
 		
 	}
+	/** searchClient
+     * Method used to search a client for the name
+     */
 	private void searchClient() {
 		System.out.println("Enter the nit of the restaurant who belongs the client you want to search");
 		String nit=sc.nextLine();
@@ -431,6 +464,9 @@ public class Menu {
 			System.out.println("Search time: "+ end);
 		}
 	}
+	/** importData
+     * Method used to import information like restaurants,products,clients, or order
+     */
 	private void importData() {
 		System.out.println("What kind of information do you want to import? Choose an option");
 		System.out.println("1. Restaurants");

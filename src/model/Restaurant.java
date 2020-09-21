@@ -28,7 +28,12 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 	private ArrayList<Product> products;
 	private ArrayList<Client> clients;
 	//Methods
-	//Methods
+	/**
+	 * 
+	 * @param name!=null
+	 * @param nit!=null
+	 * @param manager!=null
+	 */
 	public Restaurant(String name,String nit,String manager) throws IOException {
 		this.name=name;
 		this.nit=nit;
@@ -48,30 +53,68 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		saveClients();
 		saveProducts();
 	}
+	/** getName
+     * Method to provide the name of the restaurant
+     * @return String name
+     */
 	public String getName() {
 		return this.name;
 	}
+	/** setName
+     * Method to changes the name of the restaurant
+     * @param name-name of the restaurant!= null
+     */
 	public void setName(String name) {
 		this.name = name;
 	}
+	/** getNit
+     * Method to provide the nit of the restaurant
+     * @return String nit
+     */
 	public String getNit() {
 		return this.nit;
 	}
+	/** setNit
+     * Method to changes the nit of the restaurant
+     * @param nit-nit of the restaurant!= null
+     */
 	public void setNit(String nit) {
 		this.nit = nit;
 	}
+	/** getManager
+     * Method to provide the manager of the restaurant
+     * @return String manager
+     */
 	public String getManager() {
 		return this.manager;
 	}
+	/** setManager
+     * Method to changes the manager of the restaurant
+     * @param manager-manager of the restaurant!= null
+     */
 	public void setManager(String manager) {
 		this.manager = manager;
 	}
+	/** getClients
+     * Method to provide the clients list of the restaurant
+     * @return ArrayList<Client> clients
+     */
 	public ArrayList<Client> getClients(){
 		return clients;
 	}
+	/** getProducts
+     * Method to provide the productslist of the restaurant
+     * @return ArrayList<Product> products
+     */
 	public ArrayList<Product> getProducts(){
 		return products;
 	}
+	/** searchClient
+     *Method used to search for a client.
+     * post:Client object created
+     * @param id_number -client id number-!= null
+     * @return Client search null or not if find it.
+     */
 	public Client searchClient(String id_number) {
 		Client search=null;
 		boolean find=false;
@@ -85,6 +128,12 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		}
 		return search;
 	}
+	/** searchProduct
+     *Method used to search for a product.
+     * post:Product object created
+     * @param icode -product code-!= null
+     * @return Product search null or not if find it.
+     */
 	public Product searchProduct(String code) {
 		Product search=null;
 		boolean find=false;
@@ -98,6 +147,11 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		}
 		return search;
 	}
+	/** addClient
+     * Method used to add client
+     * @param id_type-id_number-name-phone-adress-!= null
+     * @return void
+     */
 	public void addClient(String id_type,String id_number,String name,String phone, String adress) {
 		Client client= new Client(id_type,id_number,name,phone,adress);
 		if(clients.isEmpty()) {
@@ -113,10 +167,19 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 			clients.add(s,client);
 			}
 	}
+	/** addProduct
+     * Method used to add client
+     * @param code-name-description-cost-nit-!= null
+     * @return void
+     */
 	public void addProduct(String code,String name,String description,double cost,String nit) throws NegativeCostException, CeroCostException {
 		Product product=new Product(code,name,description,cost,nit);
 		products.add(product);
 	}
+	/** toStringProducts
+     * Method to provide the products information of the restaurant
+     * @return String products information of the restaurant
+     */
 	public String toStringProducts() {
 		String message="Product List: \n";
 		for(Product myProducts:products) {
@@ -124,6 +187,10 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		}
 		return message;
 	}
+	/** bubble
+     * Method to organize a list of clients with bubble sort
+     * @return ArrayList<Client> clients 
+     */
 	public ArrayList<Client> bubble(ArrayList<Client> clients){
 		for(int s=0; s<clients.size(); s++){
 		    for(int m=0; m<clients.size()-1; m++){
@@ -139,6 +206,10 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		}
 		return clients;
 	  }
+	/** updateClients
+     * Method to update the clients information of the restaurant
+     * @return void
+     */
 	public void updateClients(String document,String newId_number,String newId_type,String newName,String newPhone,String newAdress) {
 		Client c=searchClient(document);
 		if(c!=null) {
@@ -159,6 +230,10 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 			}
 		}
 	}
+	/** updateProducts
+     * Method to update the products information of the restaurant
+     * @return void
+     */
 	public void updateProducts(String code,String newCode,String newNit,String newName,String newDescription,double newCost) throws NegativeCostException, CeroCostException {
 		Product p=searchProduct(code);
 		if(p!=null) {
@@ -179,6 +254,12 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 			}
 		}
 	}
+	/** searchClientName
+     *Method used to search for a client name
+     * post:Client object created
+     * @param name -client name-!= null
+     * @return Client search null or not if find it.
+     */
 	public boolean searchClientName(String name) {
 		boolean search=false;
 		for(int s=0;s<clients.size();s++) {
@@ -189,6 +270,11 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		}
 		return search;
 	}
+	/** removeClient
+     * Method to remove a client of the list of clients of the restaurant
+     * @param eliminatedCode-!= null
+     * @return void
+     */
 	public void removeClient(String eliminateCode) {
 		Client c=searchClient(eliminateCode);
 		if(c!=null) {
@@ -199,6 +285,11 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 			}
 		}
 	}
+	/** removeProduct
+     * Method to remove a product of the list of products of the restaurant
+     * @param eliminatedCode-!= null
+     * @return void
+     */
 	public void removeProduct(String eliminateCode) {
 		Product p=searchProduct(eliminateCode);
 		if(p!=null) {
@@ -209,6 +300,10 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 			}
 		}
 	}
+	/** toStringClients
+     * Method to provide the clients information of the restaurant
+     * @return String clients information of the restaurant
+     */
 	public String toStringClients() {
 		ArrayList<Client> clients2;
 		clients2=new ArrayList<Client>();
@@ -219,6 +314,11 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		}
 		return message;
 	}
+	/**importDataClient
+     * Method to import data clients information of the restaurant
+     * @param File-!= null
+     * @return void
+     */
 	public void importDataClient(File file) throws IOException {
 		BufferedReader br =new BufferedReader(new FileReader(file));
 		String line=br.readLine();
@@ -229,6 +329,11 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		}
 		br.close();
 	}
+	/**importDataClient
+     * Method to import data products information of the restaurant
+     * @param File-!= null
+     * @return void
+     */
 	public void importDataProduct(File file) throws IOException, NumberFormatException, NegativeCostException, CeroCostException {
 		BufferedReader br =new BufferedReader(new FileReader(file));
 		String line=br.readLine();
@@ -239,11 +344,19 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		}
 		br.close();
 	}
+	/**saveClient
+     * Method to save data clients information of the restaurant
+     * @return void
+     */
 	private void saveClients() throws IOException {
 		ObjectOutputStream oos= new ObjectOutputStream(new FileOutputStream(CLIENTS_FILE_NAME));
 		oos.writeObject(clients);
 		oos.close();
 	}
+	/**loadClient
+     * Method to load data clients information of the restaurant
+     * @return void
+     */
 	private void loadClients() throws IOException, ClassNotFoundException{
 		File f=new File(CLIENTS_FILE_NAME);
 		boolean load=false;
@@ -254,11 +367,19 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 			ois.close();
 		}
 	}
+	/**saveProducts
+     * Method to save data products information of the restaurant
+     * @return void
+     */
 	private void saveProducts() throws IOException {
 		ObjectOutputStream oos= new ObjectOutputStream(new FileOutputStream(PRODUCTS_FILE_NAME));
 		oos.writeObject(products);
 		oos.close();
 	}
+	/**loadClient
+     * Method to load data products information of the restaurant
+     * @return void
+     */
 	private void loadProducts() throws IOException, ClassNotFoundException{
 		File f=new File(PRODUCTS_FILE_NAME);
 		boolean load=false;
@@ -269,6 +390,9 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 			ois.close();
 		}
 	}
+	/**compareTo
+     * Method to compares the restaurants names and sort
+     */
 	@Override
 	public int compareTo(Restaurant r) {
 		return name.compareToIgnoreCase(r.getName());
