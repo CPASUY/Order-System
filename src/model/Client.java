@@ -88,16 +88,6 @@ public class Client implements Comparable<Client>,Serializable{
 	}
 	@Override
 	public int compareTo(Client other) {
-		int comp;
-		int doc1=Integer.parseInt(id_number);
-		int doc2=Integer.parseInt(other.getId_number());
-		if(doc1<doc2) {
-			comp = 1; 
-		}else if(doc1>doc2) {
-			comp = -1;
-		}else {
-			comp=0;
-		}
-		return comp;
+		return other.getName().compareToIgnoreCase(name);
 	}
 }

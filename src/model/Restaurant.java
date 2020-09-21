@@ -99,42 +99,19 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		return search;
 	}
 	public void addClient(String id_type,String id_number,String name,String phone, String adress) {
-		int comp;
 		Client client= new Client(id_type,id_number,name,phone,adress);
-		String full1=" ";
-		String full2=" "; 
-		String parts[]=client.getName().split(" ");
-		if(parts.length==2) {
-			full1+=parts[2];
-			full1+=parts[1];
-			full1+=parts[0];
+		if(clients.isEmpty()) {
+			clients.add(client);
 		}
 		else {
-			full1+=parts[1];
-			full1+=parts[0];
-		}
-		for (int s= 0; s< clients.size(); s++) {
-            for (int m=s+1; m<clients.size();m++) {
-            	String nom2 = clients.get(m).getName(); 
-        		String parts2[]=nom2.split(" ");
-        		if(parts2.length==2) {
-        			full2+=parts[2];
-        			full2+=parts[1];
-        			full2+=parts[0];
-        		}
-        		else {
-        			full2+=parts[1];
-        			full2+=parts[0];
-        		}
-                if (full1.compareTo(full2)<0) 
-                {
-                    Client temp = client;
-                    clients.add(s,clients.get(m));
-                    clients.add(m,client);
-                }
-            }
-        }
-		clients.add(client);
+			int s= 0;
+			while(s<clients.size()){
+				while(client.getName().compareTo(clients.get(s).getName())>0) {
+				s++;
+				}
+			}
+			clients.add(s,client);
+			}
 	}
 	public void addProduct(String code,String name,String description,double cost,String nit) throws NegativeCostException, CeroCostException {
 		Product product=new Product(code,name,description,cost,nit);
@@ -246,7 +223,7 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		BufferedReader br =new BufferedReader(new FileReader(file));
 		String line=br.readLine();
 		while(line!=null) {
-			String [] parts=line.split("|");
+			String [] parts=line.split(",");
 			addClient(parts[0],parts[1],parts[2],parts[3],parts[4]);
 			line=br.readLine();
 		}
@@ -296,5 +273,6 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 	public int compareTo(Restaurant r) {
 		return name.compareToIgnoreCase(r.getName());
 	}
+
 
 }

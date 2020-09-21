@@ -29,10 +29,8 @@ public class App {
 		try {
 			loadRestaurants();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		saveRestaurants();
@@ -84,15 +82,28 @@ public class App {
 		}
 		return search;
 	}
-	public void addRestaurant(String name,String nit,String manager) throws IOException{
+	public boolean addRestaurant(String name,String nit,String manager) throws IOException{
+		boolean add=false;
+		Restaurant r=searchRestaurant(nit);
+		if(r==null) {
+			add=true;
 		Restaurant restaurant=new Restaurant(name,nit,manager);
 		restaurants.add(restaurant);
+		}
+		return add;
 	}
-	public void addClient(String nit,String id_type,String id_number,String name,String phone, String adress){
+	public boolean addClient(String nit,String id_type,String id_number,String name,String phone, String adress){
+		boolean add=false;
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
+			add=true;
 			restaurant.addClient(id_type,id_number,name,phone,adress);
 		}	
+		return add;
+	}
+	public void exit() {
+		orders.clear();
+		restaurants.clear();
 	}
 	public void addProduct(String code,String name,String description,double cost,String nit) throws NegativeCostException, CeroCostException{
 		Restaurant restaurant=searchRestaurant(nit);
@@ -106,9 +117,9 @@ public class App {
 	}
 	public String toStringRestaurants() {
 		String message="Restaurants List: \n";
-		for(Restaurant myR:restaurants) {
-			message += myR.getName() + "-"+ myR.getNit() + "-"+ myR.getManager()+ "\n";
-		}
+			for(int s=0;s<restaurants.size();s++) {
+				message += restaurants.get(s).getName() + "-"+ restaurants.get(s).getNit() + "-"+ restaurants.get(s).getManager()+ "\n";
+			}
 		return message;
 	}
 	public String toStringProducts(String nit) {
@@ -141,6 +152,20 @@ public class App {
 			message=restaurant.toStringClients();
 		}
 		return message;
+	}
+	public void statusOrder(String status,String code) {
+		Order or=searchOrder(code);
+		if(or!=null) {
+			if(status.equals("REQUESTED")) {
+			or.setStatus("PROCESS");
+			}
+			else if(status.equals("PROCESS")) {
+				or.setStatus("SHIPPED");
+			}
+			else if(status.equals("SHIPPED")) {
+				or.setStatus("DELIVERED");
+			}
+		}
 	}
 	public void updateRestaurant(String nit,String newNit,String newName,String newManager) {
 		Restaurant restaurant=searchRestaurant(nit);
@@ -227,7 +252,7 @@ public class App {
 		BufferedReader br =new BufferedReader(new FileReader(f));
 		String line=br.readLine();
 		while(line!=null) {
-			String [] parts=line.split("|");
+			String [] parts=line.split(",");
 			addRestaurant(parts[0],parts[1],parts[2]);
 			line=br.readLine();
 		}

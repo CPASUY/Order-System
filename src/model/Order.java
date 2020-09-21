@@ -29,7 +29,7 @@ public class Order implements Serializable {
 		this.code_client=code_client;
 		this.nit=nit;
 		this.orderList=orderList;
-		this.status="Requested";
+		this.status="REQUESTED";
 	}
 
 	public String getCode() {
