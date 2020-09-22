@@ -2,12 +2,16 @@ package model;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -118,8 +122,7 @@ public class App {
 		boolean add=false;
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
-			add=true;
-			restaurant.addClient(id_type,id_number,name,phone,adress);
+			add=restaurant.addClient(id_type,id_number,name,phone,adress);
 		}	
 		return add;
 	}
@@ -360,11 +363,15 @@ public class App {
      */
 	public void importDataRestaurant(String name) throws IOException {
 		File f=new File(name);
+		int cont=0;
 		BufferedReader br =new BufferedReader(new FileReader(f));
 		String line=br.readLine();
 		while(line!=null) {
+			if(cont>0){
 			String [] parts=line.split(",");
 			addRestaurant(parts[0],parts[1],parts[2]);
+			}
+			cont++;
 			line=br.readLine();
 		}
 		br.close();
@@ -393,18 +400,56 @@ public class App {
 			restaurant.importDataProduct(f);
 		}
 	}
+	public static Date convertDate (String date) throws ParseException {
+		Calendar date1=Calendar.getInstance();
+		int year=0;
+		int month=0;
+		int day=0;
+		int hrs=0;
+		int min=0;
+		int sec=0;
+		String []parts=date.split("-");
+		year=Integer.parseInt(parts[0]);
+		month=Integer.parseInt(parts[1]);
+		String [] parts2=parts[2].split(" ");
+		day=Integer.parseInt(parts2[0]);
+		String []parts3=parts2[1].split(":");
+		hrs=Integer.parseInt(parts3[0]);
+		min=Integer.parseInt(parts3[1]);
+		sec=Integer.parseInt(parts3[2]);
+		date1.set(year,month,day,hrs,min,sec);
+		Date dateFinal=date1.getTime();
+		return dateFinal;
+		
+	}  
 	/**importDataOrder
      * Method to import data order information 
      * @param name!= null
      * @return void
+	 * @throws IOException,FileNotFoundException 
+	 * @throws ParseException 
+	 * @throws CeroCostException 
+	 * @throws NegativeCostException 
+	 * @throws NumberFormatException 
+	 * @throws Exception 
      */
-	public void importDataOrder(String name) throws IOException {
+	public void importDataOrder(String name) throws IOException,FileNotFoundException, ParseException, NumberFormatException, NegativeCostException, CeroCostException  {
 		File f=new File(name);
+		ArrayList<Product> p;
+		p=new ArrayList<Product>();
+		int cont=0;
 		BufferedReader br =new BufferedReader(new FileReader(f));
 		String line=br.readLine();
 		while(line!=null) {
-			String [] parts=line.split("|");
+			if(cont>0){
+				String [] parts=line.split(",");
+				Date date=convertDate(parts[1]);
+				Product product=new Product(parts[4],parts[5],parts[6],Double.parseDouble(parts[7]),parts[8]);
+				p.add(product);
+				addOrder(parts[0],date,parts[2],parts[3],p);
+			}
 			line=br.readLine();
+			cont++;
 		}
 		br.close();
 	}

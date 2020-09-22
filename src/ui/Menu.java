@@ -3,7 +3,9 @@ import model.App;
 import model.Product;
 import model.Restaurant;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -165,6 +167,7 @@ public class Menu {
 		products=new ArrayList<Product>();
 		int[] order;
 		Date date = new Date();
+		System.out.println(date);
 		 Random aleatorio = new Random();
          String alfa = "ABCDEFGHIJKLMNOPQRSTVWXYZ";
          String code = "";  
@@ -177,17 +180,17 @@ public class Menu {
 		System.out.print("Please enter the nit of the restaurant who belongs the order : ");
 		String nit = sc.nextLine();
 		System.out.println("Products of the restaurant: ");
-		System.out.print(app.toString());
+		System.out.print(app.toStringProducts(nit));
 		System.out.println("How many products do you want?");
 		int pro=Integer.parseInt(sc.nextLine());
 		order=new int[pro];
 		System.out.println("Choose the products you want by writing the number in which the products are ordered");	
-		int option=Integer.parseInt(sc.nextLine());
-		for(int s=0;s<order.length && option!=0;s++) {
+		for(int s=0;s<order.length;s++) {
+			int option=Integer.parseInt(sc.nextLine());
 			order[s]=option;
 		}
 		products=app.chooseProducts(order,nit);
-		System.out.print("Please enter the code of the client: ");
+		System.out.println("Please enter the code of the client: ");
 		String code_client= sc.nextLine();
 		
 		app.addOrder(code, date, code_client,nit,products);
@@ -392,10 +395,11 @@ public class Menu {
      * Method used to show all the clients of a restaurant
      */
 	private void showClients() {
+		String msg="";
 		System.out.println("Enter the nit of the restaurant");
 		String nit=sc.nextLine();
-		app.toStringClients(nit);
-		System.out.println(app.toStringClients(nit));	
+		msg=app.toStringClients(nit);
+		System.out.println(msg);	
 	}
 	/** orderStatus
      * Method used to change the status of a order
@@ -457,11 +461,11 @@ public class Menu {
 		long end = System.currentTimeMillis();
 		if(found==false) {
 			System.out.println("The client does not exist");
-			System.out.println("Search time: "+ end);
+			System.out.println("Search time:"+(end-start));
 		}
 		else {
 			System.out.println("Client founded");
-			System.out.println("Search time: "+ end);
+			System.out.println("Search time:"+(end-start));
 		}
 	}
 	/** importData
@@ -488,7 +492,7 @@ public class Menu {
 			}
 		}
 		else if(option==2) {
-			System.out.print("Please enter the nit of the restaurant who belongs the order : ");
+			System.out.print("Please enter the nit of the restaurant who belongs the clients : ");
 			String nit = sc.nextLine();
 			System.out.println("Type the file name to import:");
 			String n=sc.nextLine();
@@ -502,7 +506,7 @@ public class Menu {
 			}
 		}
 		else if(option==3) {
-			System.out.print("Please enter the nit of the restaurant who belongs the order : ");
+			System.out.print("Please enter the nit of the restaurant who belongs the products : ");
 			String nit = sc.nextLine();
 			System.out.println("Type the file name to import:");
 			String n=sc.nextLine();
@@ -530,9 +534,18 @@ public class Menu {
 			try {
 				app.importDataOrder(name);
 				System.out.println("The file has been imported successfully");
-			}
-			catch(IOException e) {
-				System.out.println("The data can not be imported");
+			} catch (CeroCostException e) {
+				System.out.println(e.getMessage());
+			}catch(NegativeCostException e) {
+				System.out.println(e.getMessage());
+			}catch(NumberFormatException e) {
+				e.printStackTrace();
+			}catch(ParseException e) {
+				e.printStackTrace();
+			}catch(FileNotFoundException e) {
+				e.printStackTrace();
+			}catch(IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}

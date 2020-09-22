@@ -152,20 +152,32 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
      * @param id_type-id_number-name-phone-adress-!= null
      * @return void
      */
-	public void addClient(String id_type,String id_number,String name,String phone, String adress) {
+	public boolean addClient(String id_type,String id_number,String name,String phone, String adress) {
+		boolean add=false;
+		int cont=0;
+		boolean find=false;
 		Client client= new Client(id_type,id_number,name,phone,adress);
+		String [ ]parts=client.getName().split(" ");
+		String full=parts[1]+parts[0];
 		if(clients.isEmpty()) {
 			clients.add(client);
+			add=true;
 		}
 		else {
-			int s= 0;
-			while(s<clients.size()){
-				while(client.getName().compareTo(clients.get(s).getName())>0) {
-				s++;
+			for(int s=0;s<clients.size()&& find==false;s++) {
+				String[] parts2=clients.get(s).getName().split(" ");
+				String full2=parts[1]+parts[0];
+				if(full.compareTo(full2)>0) {
+					cont++;
+				}
+				else {
+					find=true;
 				}
 			}
-			clients.add(s,client);
+			if(find=true)
+				clients.add(cont,client);
 			}
+		return add;
 	}
 	/** addProduct
      * Method used to add client
@@ -183,7 +195,7 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 	public String toStringProducts() {
 		String message="Product List: \n";
 		for(Product myProducts:products) {
-			message += myProducts.getName() + "-"+ myProducts.getDescription() + "-"+ myProducts.getCost();
+			message += myProducts.getName() + "|"+ myProducts.getDescription() + "|"+ myProducts.getCost()+"\n";
 		}
 		return message;
 	}
@@ -192,19 +204,21 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
      * @return ArrayList<Client> clients 
      */
 	public ArrayList<Client> bubble(ArrayList<Client> clients){
-		for(int s=0; s<clients.size(); s++){
-		    for(int m=0; m<clients.size()-1; m++){
-		    	int phone1=Integer.parseInt(clients.get(m).getPhone());
-		    	int phone2=Integer.parseInt(clients.get(m+2).getPhone());
-		        if(phone1>phone2){
-		        	Client temp=clients.get(m+1);
-		        	Client now=clients.get(m);
-		        	clients.add(m+1,now);
-		        	clients.add(m,temp);
-		        }
-		    }
-		}
-		return clients;
+		for (int s= 0; s< clients.size()-1; s++){
+	        for(int m=0; m< clients.size()-1; m++) {
+	             String a= clients.get(s).getPhone();
+	             String b= clients.get(m+1).getPhone();
+	             Client c = clients.get(s);
+	             Client d = clients.get(m+1);
+	             if ( a.compareTo(b)>0)  {
+	               Client temp = d;  
+	                 clients.set(m+1, c);
+	                 clients.set(s, temp);
+
+	             } 
+	        }
+	}
+	return clients;
 	  }
 	/** updateClients
      * Method to update the clients information of the restaurant
@@ -310,7 +324,14 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		clients2=bubble(clients);
 		String message="Clients List: \n";
 		for(Client myClients:clients2) {
-			message += myClients.getName() + "-"+ myClients.getId_type() + "-"+ myClients.getId_number()+ "-"+ myClients.getPhone();
+			message += myClients.getName() + "|"+ myClients.getId_type() + "|"+ myClients.getId_number()+ "|"+ myClients.getPhone()+"\n";
+		}
+		return message;
+	}
+	public String toStringClients2() {
+		String message="Clients List: \n";
+		for(Client myClients:clients) {
+			message += myClients.getName() + "|"+ myClients.getId_type() + "|"+ myClients.getId_number()+ "|"+ myClients.getPhone()+"\n";
 		}
 		return message;
 	}
@@ -321,13 +342,19 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
      */
 	public void importDataClient(File file) throws IOException {
 		BufferedReader br =new BufferedReader(new FileReader(file));
+		int count=0;
 		String line=br.readLine();
 		while(line!=null) {
-			String [] parts=line.split(",");
-			addClient(parts[0],parts[1],parts[2],parts[3],parts[4]);
-			line=br.readLine();
+			 if(count>0){
+				 String [] parts=line.split(",");
+				 addClient(parts[0],parts[1],parts[2],parts[3],parts[4]);
+			 }
+			 count++;
+			 line=br.readLine();
 		}
 		br.close();
+		String msg=toStringClients2();
+		System.out.println(msg);
 	}
 	/**importDataClient
      * Method to import data products information of the restaurant
@@ -336,11 +363,18 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
      */
 	public void importDataProduct(File file) throws IOException, NumberFormatException, NegativeCostException, CeroCostException {
 		BufferedReader br =new BufferedReader(new FileReader(file));
+		int count=0;
 		String line=br.readLine();
 		while(line!=null) {
-			String [] parts=line.split("|");
-			addProduct(parts[0],parts[1],parts[2],Double.parseDouble(parts[3]),parts[4]);
-			line=br.readLine();
+			 if(count>0){
+				 String [] parts=line.split(",");
+				 if(parts[3]!=null) {
+					double cost=Double.parseDouble(parts[3]);
+					addProduct(parts[0],parts[1],parts[2],cost,parts[4]);
+			     }
+			 }
+			 count++;
+			 line=br.readLine();
 		}
 		br.close();
 	}

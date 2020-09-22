@@ -103,6 +103,10 @@ public class Client implements Comparable<Client>,Serializable{
      */
 	@Override
 	public int compareTo(Client other) {
-		return other.getName().compareToIgnoreCase(name);
+		String [] name1=name.split(" ");
+		String [] name2=other.getName().split(" ");
+		String full1=name1[1]+name1[0];
+		String full2=name2[1]+name2[0];
+		return full1.compareTo(full2);
 	}
 }
