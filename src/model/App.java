@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -452,5 +453,13 @@ public class App {
 			cont++;
 		}
 		br.close();
+	}
+	public void exportOrders(File file) throws FileNotFoundException {
+		PrintWriter pw =new PrintWriter(file);
+		pw.write("Nit Restaurant ID client Date Code Product\n");
+		for(int s=0;s<orders.size();s++) {
+			pw.write(orders.get(s).getNit()+" "+ orders.get(s).getCode_client()+" "+orders.get(s).getDate());
+		}
+		
 	}
 }

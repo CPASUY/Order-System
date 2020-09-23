@@ -3,6 +3,7 @@ import model.App;
 import model.Product;
 import model.Restaurant;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -547,6 +548,19 @@ public class Menu {
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	public void exportOrders() {
+		System.out.println("Type the file name to export:");
+		String name=sc.nextLine();
+		String file_name="data/"+name+".csv";
+		File export=new File (file_name);
+		try{
+		app.exportOrders(export);
+		System.out.println("The file has been exported successfully");
+		}
+		catch(FileNotFoundException e) {
+			System.out.println("The data can not be exported");
 		}
 	}
 }

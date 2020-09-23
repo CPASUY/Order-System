@@ -105,8 +105,9 @@ public class Client implements Comparable<Client>,Serializable{
 	public int compareTo(Client other) {
 		String [] name1=name.split(" ");
 		String [] name2=other.getName().split(" ");
-		String full1=name1[1]+name1[0];
-		String full2=name2[1]+name2[0];
-		return full1.compareTo(full2);
+		int comp =  name1[1].compareToIgnoreCase(name2[1]);
+        if (comp!= 0)
+            return comp;
+        return name1[0].compareToIgnoreCase(name2[0]);
 	}
 }

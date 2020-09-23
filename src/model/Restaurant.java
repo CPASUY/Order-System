@@ -103,7 +103,7 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		return clients;
 	}
 	/** getProducts
-     * Method to provide the productslist of the restaurant
+     * Method to provide the products list of the restaurant
      * @return ArrayList<Product> products
      */
 	public ArrayList<Product> getProducts(){
@@ -157,17 +157,13 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		int cont=0;
 		boolean find=false;
 		Client client= new Client(id_type,id_number,name,phone,adress);
-		String [ ]parts=client.getName().split(" ");
-		String full=parts[1]+parts[0];
 		if(clients.isEmpty()) {
 			clients.add(client);
 			add=true;
 		}
 		else {
 			for(int s=0;s<clients.size()&& find==false;s++) {
-				String[] parts2=clients.get(s).getName().split(" ");
-				String full2=parts[1]+parts[0];
-				if(full.compareTo(full2)>0) {
+				if(client.compareTo(clients.get(s))<0) {
 					cont++;
 				}
 				else {
