@@ -10,7 +10,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import exceptions.CeroCostException;
 import exceptions.NegativeCostException;
@@ -257,6 +256,19 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 			}
 		}
 	}
+	public void orderByname() {
+			for (int i =1; i < clients.size(); i++) {
+				Client ci = clients.get(i);
+				int j = i;
+				Client cj= clients.get(j-1);
+				while(j>0 && ci.compareByName(cj)<0) {
+					clients.set(j,cj);
+					j--;
+					if(j>0) cj = clients.get(j-1);
+				}
+				clients.set(j,cj);
+			}
+		}
 	/** searchClientName
      *Method used to search for a client name
      * post:Client object created
@@ -264,14 +276,23 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
      * @return Client search null or not if find it.
      */
 	public boolean searchClientName(String name) {
-		boolean search=false;
-		for(int s=0;s<clients.size();s++) {
-			String []parts=clients.get(s).getName().split(" ");
-			if(parts[0].equals(name)) {
-				search=true;
+		orderByname();
+		boolean exist=false;
+		int inicio = 0;
+		int fin = clients.size()-1;
+		while( inicio <= fin && exist==false){
+			int medio = ( inicio + fin ) / 2;
+			if( clients.get(medio).getName().equals(name)){
+				exist = true;
+			}
+			else if(clients.get(medio).getName().compareTo(name)>0){
+				fin = medio - 1;
+			}
+			else{
+				inicio = medio + 1;
 			}
 		}
-		return search;
+		return exist;
 	}
 	/** removeClient
      * Method to remove a client of the list of clients of the restaurant
@@ -380,11 +401,10 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
      * Method to load data clients information of the restaurant
      * @return void
      */
+	@SuppressWarnings("unchecked")
 	private void loadClients() throws IOException, ClassNotFoundException{
 		File f=new File(CLIENTS_FILE_NAME);
-		boolean load=false;
 		if(f.exists()) {
-			load=true;
 			ObjectInputStream ois= new ObjectInputStream(new FileInputStream(f));
 			clients=(ArrayList<Client>) ois.readObject();
 			ois.close();
@@ -403,11 +423,10 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
      * Method to load data products information of the restaurant
      * @return void
      */
+	@SuppressWarnings("unchecked")
 	private void loadProducts() throws IOException, ClassNotFoundException{
 		File f=new File(PRODUCTS_FILE_NAME);
-		boolean load=false;
 		if(f.exists()) {
-			load=true;
 			ObjectInputStream ois= new ObjectInputStream(new FileInputStream(f));
 			products=(ArrayList<Product>) ois.readObject();
 			ois.close();

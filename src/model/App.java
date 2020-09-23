@@ -10,7 +10,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -19,8 +18,6 @@ import java.util.List;
 
 import exceptions.CeroCostException;
 import exceptions.NegativeCostException;
-
-
 public class App {
 	//Constants
 	public static final String RESTAURANTS_FILE_NAME="data/restaurants.bbd";
@@ -86,7 +83,7 @@ public class App {
 	/** searchOder
      *Method used to search for a order
      * post:Oder object created
-     * @param code-order codet-!= null
+     * @param code-order code-!= null
      * @return Order search null or not if find it.
      */
 	public Order searchOrder(String code) {
