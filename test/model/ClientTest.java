@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 class ClientTest {
 	private Client c;
 	private String name;
+	private String lname;
 	private String id_number;
 	private String id_type;
 	private String phone;
@@ -20,22 +21,24 @@ class ClientTest {
 		phone="3043808681";
 		adress="Carrera 92#54-42";
 
-		c=new Client(id_type,id_number,name,phone,adress);
+		c=new Client(id_type,id_number,name,lname,phone,adress);
 	}
 	public void setupStage2(){
-		name="Jack Stauber";
+		name="Jack";
+		lname="Sparrow";
 		id_number="1.123.653.321";
 		id_type="Cedula";
 		phone="3531308681";
 		adress="Carrera 21#55-42";
 
-		c=new Client(id_type,id_number,name,phone,adress);
+		c=new Client(id_type,id_number,name,lname,phone,adress);
 	}
 	@Test
 	void testClient () throws IOException {
 		setupStage1();
 		
 		assertEquals(name,c.getName(),"The client name is wrong");
+		assertEquals(lname,c.getLast_name(),"The client last name is wrong");
 		assertEquals(id_number,c.getId_number(),"The client id number is wrong");
 		assertEquals(id_type,c.getId_type(),"The client id type is wrong");
 		assertEquals(phone,c.getPhone(),"The client phone is wrong");

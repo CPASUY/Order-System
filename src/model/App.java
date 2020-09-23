@@ -24,6 +24,7 @@ import exceptions.NegativeCostException;
 public class App {
 	//Constants
 	public static final String RESTAURANTS_FILE_NAME="data/restaurants.bbd";
+	public static final String ORDERS_FILE_NAME="data/orders.bbd";
 	//Relations
 	private ArrayList<Restaurant> restaurants;
 	private ArrayList<Order> orders;
@@ -33,12 +34,14 @@ public class App {
 		this.orders=new ArrayList<Order>();
 		try {
 			loadRestaurants();
+			loadOrders();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		saveRestaurants();
+		saveOrders();
 	}
 	public ArrayList<Restaurant> getRestaurants(){
 		return restaurants;
@@ -119,17 +122,18 @@ public class App {
      * @param nit-id_type-id_number-name-phone-adress-!= null
      * @return boolean add
      */
-	public boolean addClient(String nit,String id_type,String id_number,String name,String phone, String adress){
+	public boolean addClient(String nit,String id_type,String id_number,String lname,String name,String phone, String adress){
 		boolean add=false;
 		Restaurant restaurant=searchRestaurant(nit);
 		if(restaurant!=null) {
-			add=restaurant.addClient(id_type,id_number,name,phone,adress);
+			add=restaurant.addClient(id_type,id_number,name,lname,phone,adress);
 		}	
 		return add;
 	}
 	public void exit() {
 		orders.clear();
 		restaurants.clear();
+		orders.clear();
 	}
 	/** addProduct
      * Method used to add product
@@ -187,13 +191,34 @@ public class App {
      * Method to load data restaurants information
      * @return void
      */
+	@SuppressWarnings("unchecked")
 	private void loadRestaurants() throws IOException, ClassNotFoundException{
 		File f=new File(RESTAURANTS_FILE_NAME);
-		boolean load=false;
 		if(f.exists()) {
-			load=true;
 			ObjectInputStream ois= new ObjectInputStream(new FileInputStream(f));
 			restaurants=(ArrayList<Restaurant>) ois.readObject();
+			ois.close();
+		}
+	}
+	/**saveOrders
+     * Method to save data orders information 
+     * @return void
+     */
+	private void saveOrders() throws IOException {
+		ObjectOutputStream oos= new ObjectOutputStream(new FileOutputStream(ORDERS_FILE_NAME));
+		oos.writeObject(orders);
+		oos.close();
+	}
+	/**loadOrders
+     * Method to load data orders information
+     * @return void
+     */
+	@SuppressWarnings("unchecked")
+	private void loadOrders() throws IOException, ClassNotFoundException{
+		File f=new File(ORDERS_FILE_NAME);
+		if(f.exists()) {
+			ObjectInputStream ois= new ObjectInputStream(new FileInputStream(f));
+			orders=(ArrayList<Order>) ois.readObject();
 			ois.close();
 		}
 	}
@@ -454,12 +479,17 @@ public class App {
 		}
 		br.close();
 	}
-	public void exportOrders(File file) throws FileNotFoundException {
+	public void exportOrders(File file,String s) throws FileNotFoundException {
+		ArrayList <Product>p;
+		p=new ArrayList<Product>();
 		PrintWriter pw =new PrintWriter(file);
-		pw.write("Nit Restaurant ID client Date Code Product\n");
-		for(int s=0;s<orders.size();s++) {
-			pw.write(orders.get(s).getNit()+" "+ orders.get(s).getCode_client()+" "+orders.get(s).getDate());
+		Collections.sort(orders);
+		pw.write("Nit Restaurant"+s+" ID client"+s+ "Date"+s+" Code Product\n");
+		for(int w=0;w<orders.size();w++) {
+			p=orders.get(w).getOrderList();
+			String code=p.get(0).getCode();
+			pw.write(orders.get(w).getNit()+s+ orders.get(w).getCode_client()+s+orders.get(w).getDate()+s+code+"\n");
 		}
-		
+		pw.close();	
 	}
 }

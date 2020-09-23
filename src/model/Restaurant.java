@@ -152,27 +152,20 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
      * @param id_type-id_number-name-phone-adress-!= null
      * @return void
      */
-	public boolean addClient(String id_type,String id_number,String name,String phone, String adress) {
+	public boolean addClient(String id_type,String id_number,String name,String lname,String phone, String adress) {
 		boolean add=false;
-		int cont=0;
-		boolean find=false;
-		Client client= new Client(id_type,id_number,name,phone,adress);
+		Client client= new Client(id_type,id_number,name,lname,phone,adress);
 		if(clients.isEmpty()) {
 			clients.add(client);
 			add=true;
 		}
 		else {
-			for(int s=0;s<clients.size()&& find==false;s++) {
-				if(client.compareTo(clients.get(s))<0) {
-					cont++;
-				}
-				else {
-					find=true;
-				}
+			int s=0;
+			while(s<clients.size() && client.getLast_name().compareTo(clients.get(s).getLast_name())<0 ){
+				s++;
 			}
-			if(find=true)
-				clients.add(cont,client);
-			}
+			clients.add(s,client);
+		}
 		return add;
 	}
 	/** addProduct
@@ -327,7 +320,7 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 	public String toStringClients2() {
 		String message="Clients List: \n";
 		for(Client myClients:clients) {
-			message += myClients.getName() + "|"+ myClients.getId_type() + "|"+ myClients.getId_number()+ "|"+ myClients.getPhone()+"\n";
+			message += myClients.getName() + "|"+myClients.getLast_name() + "|"+ myClients.getId_type() + "|"+ myClients.getId_number()+ "|"+ myClients.getPhone()+"\n";
 		}
 		return message;
 	}
@@ -343,7 +336,7 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		while(line!=null) {
 			 if(count>0){
 				 String [] parts=line.split(",");
-				 addClient(parts[0],parts[1],parts[2],parts[3],parts[4]);
+				 addClient(parts[0],parts[1],parts[2],parts[3],parts[4],parts[5]);
 			 }
 			 count++;
 			 line=br.readLine();
@@ -427,6 +420,4 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 	public int compareTo(Restaurant r) {
 		return name.compareToIgnoreCase(r.getName());
 	}
-
-
 }

@@ -1,10 +1,11 @@
 package model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Order implements Serializable {
+public class Order implements Serializable,Comparable<Order> {
 	//Constants
 	private static final long serialVersionUID = 1L;
 	//Atributes
@@ -114,5 +115,38 @@ public class Order implements Serializable {
      */
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	@Override
+	public int compareTo(Order o) {
+		int comp=0;
+		 comp=nit.compareTo(o.getNit());
+		 if(comp==0) {
+			comp=comparebyID(o);
+		 }
+		return comp;
+	}
+	public int comparebyID(Order o) {
+		int comp=0;
+		 comp=code_client.compareTo(o.getCode_client());
+		 if(comp==0) {
+			 comp=compareByDate(o);
+		 }
+		return comp;
+	}
+	public int compareByDate(Order o) {
+		int comp=0;      
+		 comp=date.compareTo(o.getDate());
+		 if(comp==0) {
+			 comp=compareByProduct(o);
+		 }
+		return comp;
+	}
+	public int compareByProduct(Order o) {
+		int comp=0;     
+		ArrayList<Product> p;
+		p=new ArrayList<Product>();
+		p=o.getOrderList();
+		 comp=orderList.get(0).getCode().compareTo(p.get(0).getCode());
+		return comp;
 	}
 }

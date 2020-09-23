@@ -16,6 +16,7 @@ class RestaurantTest {
 	private Client search;
 	private Client c;
 	private String nameC;
+	private String lname;
 	private String id_number;
 	private String id_type;
 	private String phone;
@@ -34,13 +35,14 @@ class RestaurantTest {
 			
 			r=new Restaurant(name,nit,manager);
 			
-			nameC="Michael Jasckson";
+			nameC="Michael";
+			lname="Jasckson";
 			id_number="1.1193.033.576";
 			id_type="Cedula";
 			phone="3043808681";
 			adress="Carrera 92#54-42";
 
-			r.addClient(id_type,id_number,nameC,phone,adress);
+			r.addClient(id_type,id_number,nameC,lname,phone,adress);
 			
 		}
 

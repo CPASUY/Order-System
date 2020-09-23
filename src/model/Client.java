@@ -9,6 +9,7 @@ public class Client implements Comparable<Client>,Serializable{
 	private String id_type;
 	private String id_number;
 	private String name;
+	private String last_name;
 	private String phone;
 	private String adress;
 	//Methods
@@ -20,10 +21,11 @@ public class Client implements Comparable<Client>,Serializable{
 	 * @param phone!=null
 	 * @param adress!=null
 	 */
-	public Client(String id_type, String id_number, String name, String phone, String adress) {
+	public Client(String id_type, String id_number, String name, String last_name,String phone, String adress) {
 		this.id_type=id_type;
 		this.id_number=id_number;
 		this.name=name;
+		this.last_name=last_name;
 		this.phone=phone;
 		this.adress=adress;
 	}
@@ -69,6 +71,20 @@ public class Client implements Comparable<Client>,Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+	/** getLast_name
+     * Method to provide the name of the client
+     * @return String name
+     */
+	public String getLast_name(){
+		return this.last_name;
+	}
+	/** setName
+     * Method to changes the name of the client
+     * @param name-name of the client!= null
+     */
+	public void setLast_name(String last_name) {
+		this.last_name = last_name;
+	}
 	/** getPhone
      * Method to provide the phone of the client
      * @return String phone
@@ -103,11 +119,25 @@ public class Client implements Comparable<Client>,Serializable{
      */
 	@Override
 	public int compareTo(Client other) {
-		String [] name1=name.split(" ");
-		String [] name2=other.getName().split(" ");
-		int comp =  name1[1].compareToIgnoreCase(name2[1]);
-        if (comp!= 0)
-            return comp;
-        return name1[0].compareToIgnoreCase(name2[0]);
+		int comp;
+		if(last_name.compareTo(getLast_name())<0) {
+			comp = -1; 
+		}else if(last_name.compareTo(getLast_name())>0) {
+			comp = 1;
+		}else {
+			comp = compareByName(other);
+		}
+		return comp;
+	}
+	public int compareByName(Client other) {
+		int comp;
+		if(name.compareTo(getName())<0) {
+			comp = -1;
+		}else if(name.compareTo(getName())>0) {
+			comp = 1;
+		}else {
+			comp = 0;
+		}
+		return comp;
 	}
 }

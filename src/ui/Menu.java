@@ -1,8 +1,6 @@
 package ui;
 import model.App;
 import model.Product;
-import model.Restaurant;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
-
 import exceptions.CeroCostException;
 import exceptions.NegativeCostException;
 enum Status{
@@ -53,7 +50,8 @@ public class Menu {
 		menu += "9. Data update \n";
 		menu += "10. Remove information\n";
 		menu += "11. Import data \n";
-		menu += "12. Exit\n";
+		menu += "12. Emport data orders \n";
+		menu += "13. Exit\n";
 		menu += "Please enter the option: ";
 		return menu;
 	}
@@ -76,7 +74,8 @@ public class Menu {
 			case 9: updateData();break;
 			case 10: remove();break;
 			case 11: importData();break;
-			case 12: exitProgram(); break;
+			case 12: exportOrders();break;
+			case 13: exitProgram(); break;
 			default: break;
 		}
 	}
@@ -95,14 +94,13 @@ public class Menu {
      * Method used to enter the information of a restaurant and register it
      */
 	private void addRestaurant() {
-		boolean add=false;
+		boolean add;
 		System.out.print("Please enter the restaurant name: ");
 		String name= sc.nextLine();;
 		System.out.print("Please enter the nit: ");
 		String nit = sc.nextLine();
 		System.out.print("Please enter the name of the restaurant manager: ");
 		String manager= sc.nextLine();
-		
 		try {
 			add=app.addRestaurant(name,nit,manager);
 		} catch (IOException e) {
@@ -121,8 +119,10 @@ public class Menu {
 	private void addClient() {
 		System.out.println("Enter the nit of the restaurant who belongs the client");
 		String nit=sc.nextLine();
-		System.out.print("Please enter the full name: ");
-		String name= sc.nextLine();;
+		System.out.print("Please enter the name: ");
+		String name= sc.nextLine();
+		System.out.print("Please enter the last name: ");
+		String last_name= sc.nextLine();
 		System.out.print("Please enter the identification type: ");
 		String id_type = sc.nextLine();
 		System.out.print("Please enter the identification number: ");
@@ -132,7 +132,7 @@ public class Menu {
 		System.out.print("Please enter the adress: ");
 		String adress= sc.nextLine();
 		
-		boolean add=app.addClient(nit,id_type,id_number,name,phone,adress);
+		boolean add=app.addClient(nit,id_type,id_number,name,last_name,phone,adress);
 		if (add==true) {
 		System.out.println("The client has been added succesfully");
 		}
@@ -163,7 +163,6 @@ public class Menu {
      * Method used to enter the information of a order and register it
      */
 	private void addOrder() {
-		String msg="";
 		ArrayList<Product> products;
 		products=new ArrayList<Product>();
 		int[] order;
@@ -554,9 +553,11 @@ public class Menu {
 		System.out.println("Type the file name to export:");
 		String name=sc.nextLine();
 		String file_name="data/"+name+".csv";
+		System.out.println("Which separator do you want to use");
+		String separator=sc.nextLine();
 		File export=new File (file_name);
 		try{
-		app.exportOrders(export);
+		app.exportOrders(export,separator);
 		System.out.println("The file has been exported successfully");
 		}
 		catch(FileNotFoundException e) {
