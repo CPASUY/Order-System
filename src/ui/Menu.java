@@ -48,10 +48,11 @@ public class Menu {
 		menu += "7. Order status\n";
 		menu += "8. Search client \n";
 		menu += "9. Data update \n";
-		menu += "10. Remove information\n";
-		menu += "11. Import data \n";
-		menu += "12. Emport data orders \n";
-		menu += "13. Exit\n";
+		menu += "10.Show the cost of the products \n";
+		menu += "11. Remove information\n";
+		menu += "12. Import data \n";
+		menu += "13. Emport data orders \n";
+		menu += "14. Exit\n";
 		menu += "Please enter the option: ";
 		return menu;
 	}
@@ -72,10 +73,11 @@ public class Menu {
 			case 7: orderStatus(); break;
 			case 8: searchClient();break;
 			case 9: updateData();break;
-			case 10: remove();break;
-			case 11: importData();break;
-			case 12: exportOrders();break;
-			case 13: exitProgram(); break;
+			case 10: sortCost();break;
+			case 11: remove();break;
+			case 12: importData();break;
+			case 13: exportOrders();break;
+			case 14: exitProgram(); break;
 			default: break;
 		}
 	}
@@ -198,6 +200,22 @@ public class Menu {
 		
 		System.out.println("The product has been added succesfully");
 	}
+	/** verifiedProducts
+     * Method used to verified if the products are the same that the client choose
+     */
+	public void verifiedProducts() {
+		System.out.println("Enter the code of the order");
+		String code=sc.nextLine();
+		System.out.println("Enter the nit of the restaurant where you did the order");
+		String nit=sc.nextLine();
+		boolean verified=app.verifiedProducts(code,nit);
+		if(verified) {
+			System.out.println("Belongs to the correct restaurant");
+		}
+		else {
+			System.out.println("Not belongs to the correct restaurant");
+		}
+	}
 	/** updateData
      * Method used to enter the information of a restaurant,client,product or order and update it
      */
@@ -209,7 +227,7 @@ public class Menu {
 		String newManager=null;
 		String newName=null;
 		String newDescription=null;
-		Double newCost=0.0;
+		Double newCost=1010101010.0;
 		String newPhone=null;
 		String newCode=null;
 		System.out.println("What update do you want to do? Choose an option");
@@ -400,6 +418,13 @@ public class Menu {
 		String nit=sc.nextLine();
 		msg=app.toStringClients(nit);
 		System.out.println(msg);	
+	}
+	private void sortCost() {
+		String msg="";
+		System.out.println("Enther the nit who belongs the products");
+		String nit=sc.nextLine();
+		msg=app.sortCost(nit);
+		System.out.println(msg);
 	}
 	/** orderStatus
      * Method used to change the status of a order

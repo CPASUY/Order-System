@@ -126,6 +126,27 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		}
 		return search;
 	}
+	/** sortCost
+     *Method used to sort the cost of the products
+     * @return msg with the information of the porducts
+     */
+	public String sortCost() {
+		String msg="";
+		 int i, j;
+		    for (i = 1; i < products.size(); i++) {
+		        Product tmp = products.get(i);
+		        j = i;
+		        while ((j > 0) && (products.get(j - 1).getCost() > tmp.getCost())) {
+		            products.set(j, products.get(j - 1));
+		            j--;
+		        }
+		        products.set(j, tmp);
+		    }
+		    for(int s=0;s<products.size();s++) {
+		    	msg += products.get(s).getName()+" "+ products.get(s).getCost()+"\n";
+		    }
+		return msg;
+	}
 	/** searchProduct
      *Method used to search for a product.
      * post:Product object created
@@ -250,7 +271,7 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 			if(newDescription!=null) {
 				p.setDescription(newDescription);
 			}
-			if(newCost!=0.0) {
+			if(newCost!=1010101010.0) {
 				p.setCost(newCost);
 			}
 		}

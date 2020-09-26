@@ -234,6 +234,19 @@ public class App {
 			ois.close();
 		}
 	}
+	/**sortCost
+     * Method to order the cost of the products
+     * @param nit !=null
+     * @return String message
+     * */
+	public String sortCost(String nit) {
+		String message="";
+		Restaurant restaurant=searchRestaurant(nit);
+		if(restaurant!=null) {
+			message=restaurant.sortCost();
+		}
+		return message;
+	}
 	/** toStringClients
      * Method to verify if the restaurants who belongs the clients exist
      * @param nit!= null
@@ -373,6 +386,27 @@ public class App {
 		if(restaurant!=null) {
 			restaurant.removeProduct(eliminateCode);
 		}
+	}
+	/** verifiedProducts
+     * Method used to verified if the products are the same that the client choose
+     * @param code!=null
+     * @param nit!=null
+     * @return boolean if verified
+     */
+	public boolean verifiedProducts(String code,String nit) {
+		ArrayList<Product>p;
+		p=new ArrayList<Product>();
+		boolean verified=true;
+		Order or=searchOrder(code);
+		if(or!=null) {
+			p=or.getOrderList();
+			for(int s=0;s<p.size();s++) {
+				if(!p.get(s).getNit().equals(nit)){
+					verified=false;
+				}
+			}
+		}
+		return verified;
 	}
 	/** removeOrder
      * Method to remove a order of the list of orders of the restaurant
