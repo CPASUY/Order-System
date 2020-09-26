@@ -94,6 +94,7 @@ public class Menu {
      * Method used to enter the information of a restaurant and register it
      */
 	private void addRestaurant() {
+		@SuppressWarnings("unused")
 		boolean add;
 		System.out.print("Please enter the restaurant name: ");
 		String name= sc.nextLine();;
@@ -348,12 +349,11 @@ public class Menu {
 	private void remove() {
 		String eliminateCode=null;
 		String nit=null;
-		String update="";
 		System.out.println("What kind of information do you want to remove? Choose an option");
-		update  = "1. Restaurant \n";
-		update += "2. Client \n";
-		update += "3. Product \n";
-		update += "4. Order \n";
+		System.out.println( "1. Restaurant \n");
+		System.out.println("2. Client \n");
+		System.out.println("3. Product \n");
+		System.out.println("4. Order \n");
 		int option=Integer.parseInt(sc.nextLine());
 		if(option==1) {
 			System.out.println("Enter the nit of the restaurant ");

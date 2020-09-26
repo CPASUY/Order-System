@@ -11,7 +11,6 @@ class AppTest {
 	private String name;
 	private String nit;
 	private String manager;
-	private String searchNit;
 	private Restaurant search;
 	public void setupStage1() throws IOException{
 		app=new App();

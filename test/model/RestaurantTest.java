@@ -7,14 +7,12 @@ import org.junit.jupiter.api.Test;
 
 
 class RestaurantTest {
-	private App app;
 	private Restaurant r;
 	private String name;
 	private String nit;
 	private String manager;
 	private String idToSearch;
 	private Client search;
-	private Client c;
 	private String nameC;
 	private String lname;
 	private String id_number;

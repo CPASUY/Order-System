@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import exceptions.CeroCostException;
 import exceptions.NegativeCostException;
@@ -43,10 +44,8 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 			loadClients();
 			loadProducts();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		saveClients();
@@ -257,17 +256,8 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 		}
 	}
 	public void orderByname() {
-			for (int i =1; i < clients.size(); i++) {
-				Client ci = clients.get(i);
-				int j = i;
-				Client cj= clients.get(j-1);
-				while(j>0 && ci.compareByName(cj)<0) {
-					clients.set(j,cj);
-					j--;
-					if(j>0) cj = clients.get(j-1);
-				}
-				clients.set(j,cj);
-			}
+		NameComparator nc = new NameComparator();
+		Collections.sort(clients,nc);
 		}
 	/** searchClientName
      *Method used to search for a client name
@@ -363,8 +353,6 @@ public class Restaurant implements Comparable<Restaurant>,Serializable {
 			 line=br.readLine();
 		}
 		br.close();
-		String msg=toStringClients2();
-		System.out.println(msg);
 	}
 	/**importDataClient
      * Method to import data products information of the restaurant

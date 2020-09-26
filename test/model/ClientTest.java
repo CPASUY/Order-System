@@ -15,7 +15,8 @@ class ClientTest {
 	private String phone;
 	private String adress;
 	public void setupStage1(){
-		name="Michael Jasckson";
+		name="Michael";
+		lname="Stauber";
 		id_number="1.1193.033.576";
 		id_type="Cedula";
 		phone="3043808681";
